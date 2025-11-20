@@ -62,11 +62,13 @@ export const Hero = () => {
               </span>
             </div>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
-              Make Scripture Memory{" "}
               <span className="gradient-primary bg-clip-text text-transparent">
-                Fun & Engaging
+                Scripture Quest
               </span>
             </h1>
+            <p className="text-2xl font-semibold text-foreground mb-2">
+              A Learning Journey Into The Word
+            </p>
             <p className="text-xl text-muted-foreground max-w-xl">
               Learn Bible verses through interactive games, build daily streaks, and grow with a supportive community. Start your spiritual journey today!
             </p>
