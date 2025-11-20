@@ -7,6 +7,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { ArrowLeft, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { CharacterGuide } from "@/components/CharacterGuide";
+import { CHARACTERS } from "@/types/characters";
 
 interface Verse {
   id: string;
@@ -121,6 +123,12 @@ export default function CopyMode() {
       </div>
 
       <div className="max-w-3xl mx-auto px-4 py-8">
+        {/* Character Guide - Phoebe for Learn stage */}
+        <CharacterGuide 
+          character={CHARACTERS.phoebe}
+          message="You're doing great! Type along and get familiar with each word."
+        />
+
         <Card className="p-8 mb-6">
           <div className="text-center mb-6">
             <h2 className="text-2xl font-bold text-primary mb-2">{verse?.reference}</h2>

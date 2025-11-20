@@ -10,7 +10,8 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Heart, Trophy, Coins, ArrowLeft, Sparkles } from "lucide-react";
 import confetti from "canvas-confetti";
-import characterHope from "@/assets/character-hope.png";
+import { CharacterGuide } from "@/components/CharacterGuide";
+import { CHARACTERS } from "@/types/characters";
 
 interface Verse {
   id: string;
@@ -256,7 +257,7 @@ export default function FillInTheBlank() {
         <Card className="p-8 max-w-2xl w-full">
           <div className="text-center space-y-6">
             <img
-              src={characterHope}
+              src={CHARACTERS.hope.imagePath}
               alt="Hope celebrates"
               className="w-32 h-32 mx-auto animate-float"
             />
@@ -323,6 +324,14 @@ export default function FillInTheBlank() {
   return (
     <div className="min-h-screen gradient-hero flex items-center justify-center px-4 py-12">
       <div className="container max-w-4xl">
+        {/* Character Guide - Kai for Practice stage */}
+        <div className="mb-6">
+          <CharacterGuide 
+            character={CHARACTERS.kai}
+            message="Focus and fill in the missing words. You're building lasting mastery."
+          />
+        </div>
+
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <Button

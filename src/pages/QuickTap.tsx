@@ -8,6 +8,8 @@ import { useHearts } from "@/hooks/useHearts";
 import { ArrowLeft, CheckCircle, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import confetti from "canvas-confetti";
+import { CharacterGuide } from "@/components/CharacterGuide";
+import { CHARACTERS } from "@/types/characters";
 
 interface Verse {
   id: string;
@@ -253,6 +255,11 @@ export default function QuickTap() {
       </div>
 
       <div className="max-w-3xl mx-auto px-4 py-8">
+        {/* Character Guide - Rhys for timed challenges */}
+        <CharacterGuide 
+          character={CHARACTERS.rhys}
+          message="Time to show what you've got! Quick thinking wins the day!"
+        />
         <Card className="p-8">
           {/* Progress */}
           <div className="mb-8">

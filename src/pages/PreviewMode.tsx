@@ -6,6 +6,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { ArrowLeft, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { CharacterGuide } from "@/components/CharacterGuide";
+import { CHARACTERS } from "@/types/characters";
 
 interface Verse {
   id: string;
@@ -112,6 +114,12 @@ export default function PreviewMode() {
       </div>
 
       <div className="max-w-3xl mx-auto px-4 py-8">
+        {/* Character Guide - Juno for Preview */}
+        <CharacterGuide 
+          character={CHARACTERS.juno}
+          message="Let me show you the story behind these words. Take your time to understand and internalize this verse."
+        />
+
         <Card className="p-8 mb-6">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-primary mb-2">{verse?.reference}</h2>
