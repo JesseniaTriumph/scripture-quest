@@ -16,7 +16,6 @@ import MemoryMatch from "./pages/MemoryMatch";
 import VerseBuilder from "./pages/VerseBuilder";
 import Review from "./pages/Review";
 import NotFound from "./pages/NotFound";
-import ScriptureReveal from "./pages/ScriptureReveal";
 import { GameSelectionScreen } from "@/components/GameSelectionScreen";
 
 const queryClient = new QueryClient();
@@ -41,7 +40,6 @@ const App = () => (
             <Route path="/game/memory-match" element={<MemoryMatch />} />
             <Route path="/game/recall" element={<RecallMode />} />
             <Route path="/game/quick-tap" element={<QuickTap />} />
-            <Route path="/game/scripture-reveal" element={<ScriptureReveal />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
