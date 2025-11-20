@@ -98,6 +98,47 @@ export type Database = {
         }
         Relationships: []
       }
+      verse_progress: {
+        Row: {
+          created_at: string
+          id: string
+          last_played_at: string
+          mastery_level: number
+          times_correct: number
+          times_wrong: number
+          user_id: string
+          verse_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          last_played_at?: string
+          mastery_level?: number
+          times_correct?: number
+          times_wrong?: number
+          user_id: string
+          verse_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          last_played_at?: string
+          mastery_level?: number
+          times_correct?: number
+          times_wrong?: number
+          user_id?: string
+          verse_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "verse_progress_verse_id_fkey"
+            columns: ["verse_id"]
+            isOneToOne: false
+            referencedRelation: "verses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       verses: {
         Row: {
           collection_id: string | null
@@ -147,7 +188,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      update_verse_progress: {
+        Args: {
+          p_coins_earned?: number
+          p_correct: boolean
+          p_user_id: string
+          p_verse_id: string
+          p_xp_earned?: number
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
