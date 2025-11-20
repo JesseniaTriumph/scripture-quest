@@ -70,7 +70,7 @@ export const Hero = () => {
               A Learning Journey Into The Word
             </p>
             <p className="text-xl text-muted-foreground max-w-xl">
-              Learn Bible verses through interactive games, build daily streaks, and grow with a supportive community. Start your spiritual journey today!
+              Learn Bible verses through interactive games, build your daily charge, and grow with a supportive community. Start your spiritual journey today!
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
               <Button 

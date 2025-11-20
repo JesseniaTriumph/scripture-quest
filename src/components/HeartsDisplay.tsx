@@ -1,4 +1,4 @@
-import { Heart, Infinity } from "lucide-react";
+import { Flame, Infinity } from "lucide-react";
 import { useHearts } from "@/hooks/useHearts";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -11,7 +11,7 @@ export const HeartsDisplay = () => {
     return (
       <Card className="p-4">
         <div className="flex items-center gap-2">
-          <Heart className="h-5 w-5 text-destructive animate-pulse" />
+          <Flame className="h-5 w-5 text-primary animate-pulse" />
           <span className="text-sm text-muted-foreground">Loading...</span>
         </div>
       </Card>
@@ -25,7 +25,7 @@ export const HeartsDisplay = () => {
           <div className="flex items-center gap-2">
             <Infinity className="h-6 w-6 text-primary animate-pulse-soft" />
             <div>
-              <p className="font-bold text-primary">Unlimited Hearts</p>
+              <p className="font-bold text-primary">Unlimited Lamp Oil</p>
               <p className="text-xs text-muted-foreground">Premium Member</p>
             </div>
           </div>
@@ -36,20 +36,20 @@ export const HeartsDisplay = () => {
   }
 
   const heartsPercentage = (hearts / maxHearts) * 100;
-  const heartColor = hearts === 0 ? "text-muted-foreground" : "text-destructive";
+  const heartColor = hearts === 0 ? "text-muted-foreground" : "text-primary";
 
   return (
     <Card className="p-4">
       <div className="space-y-3">
-        {/* Hearts count */}
+        {/* Oil Lamps count */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             {Array.from({ length: maxHearts }).map((_, i) => (
-              <Heart
+              <Flame
                 key={i}
                 className={`h-5 w-5 ${
                   i < hearts 
-                    ? "fill-destructive text-destructive animate-pulse-soft" 
+                    ? "fill-primary text-primary animate-pulse-soft" 
                     : "text-muted-foreground/30"
                 }`}
               />
@@ -66,24 +66,24 @@ export const HeartsDisplay = () => {
         {/* Regeneration timer */}
         {hearts < maxHearts && timeUntilNextHeart && (
           <div className="flex items-center justify-between text-xs text-muted-foreground">
-            <span>Next heart regenerates in:</span>
+            <span>Next lamp oil refills in:</span>
             <span className="font-mono font-bold text-primary">{timeUntilNextHeart}</span>
           </div>
         )}
 
         {hearts === maxHearts && (
           <p className="text-xs text-success text-center font-semibold">
-            ✨ All hearts restored!
+            ✨ All lamp oil restored!
           </p>
         )}
 
         {hearts === 0 && (
           <div className="text-center space-y-1">
             <p className="text-xs text-destructive font-semibold">
-              💔 Out of hearts!
+              🪔 Out of lamp oil!
             </p>
             <p className="text-xs text-muted-foreground">
-              Wait for regeneration or upgrade to Premium
+              Wait for refill or upgrade to Premium
             </p>
           </div>
         )}

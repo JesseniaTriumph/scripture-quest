@@ -102,7 +102,7 @@ export const UserStats = () => {
           </div>
           <div>
             <p className="text-2xl font-bold text-success">{profile.streak_count}</p>
-            <p className="text-xs text-muted-foreground">Day Streak 🔥</p>
+            <p className="text-xs text-muted-foreground">Charge ⚡</p>
           </div>
         </div>
       </Card>

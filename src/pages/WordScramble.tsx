@@ -155,7 +155,7 @@ export default function WordScramble() {
               <p className="text-white/90">Arrange the words in the correct order</p>
             </div>
             <div className="text-right">
-              <p className="text-sm text-white/70">Hearts</p>
+              <p className="text-sm text-white/70">Lamp Oil</p>
               <p className="text-2xl font-bold">{hearts}/5</p>
             </div>
           </div>

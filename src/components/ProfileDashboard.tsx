@@ -19,7 +19,7 @@ export const ProfileDashboard = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <StatsCard
-            title="Current Streak"
+            title="Current Charge"
             value="7 days"
             icon={Flame}
             trend="+2 days"
@@ -75,7 +75,7 @@ export const ProfileDashboard = () => {
             </h3>
             <div className="space-y-4">
               {[
-                { name: "Week Warrior", desc: "7 day streak", color: "gradient-accent" },
+                { name: "Week Warrior", desc: "7 day charge", color: "gradient-accent" },
                 { name: "Verse Master", desc: "25 verses learned", color: "gradient-primary" },
                 { name: "Quick Learner", desc: "Completed 10 games", color: "bg-success" },
               ].map((achievement, index) => (

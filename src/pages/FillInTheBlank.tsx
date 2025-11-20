@@ -146,11 +146,11 @@ export default function FillInTheBlank() {
         });
       }
 
-      // Check if out of hearts
+      // Check if out of lamp oil
       if (hearts <= 1) {
         toast({
-          title: "Out of Hearts!",
-          description: "Wait for hearts to regenerate or upgrade to Premium",
+          title: "Out of Lamp Oil!",
+          description: "Wait for lamp oil to refill or upgrade to Premium",
           variant: "destructive",
         });
         setTimeout(() => navigate("/"), 2000);
