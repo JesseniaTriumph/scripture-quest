@@ -114,7 +114,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     await supabase.auth.signOut();
     toast({
       title: "Signed Out",
-      description: "See you next time! Keep your streak going! 🔥",
+      description: "See you next time! Keep your charge going! ⚡",
     });
   };
 

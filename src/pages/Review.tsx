@@ -152,7 +152,7 @@ export default function Review() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           <Card className="p-6 text-center">
             <Calendar className="w-8 h-8 mx-auto mb-2 text-primary" />
-            <p className="text-sm text-muted-foreground mb-1">Review Streak</p>
+            <p className="text-sm text-muted-foreground mb-1">Review Charge</p>
             <p className="text-3xl font-bold">{reviewStreak} days</p>
           </Card>
           <Card className="p-6 text-center">

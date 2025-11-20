@@ -92,7 +92,7 @@ export default function Auth() {
                   <Trophy className="h-6 w-6 text-success" />
                 </div>
                 <div className="text-left">
-                  <p className="font-bold">Daily Streaks & Rewards</p>
+                  <p className="font-bold">Daily Charge & Rewards</p>
                   <p className="text-sm text-muted-foreground">Build lasting habits</p>
                 </div>
               </div>

@@ -247,7 +247,7 @@ export default function QuickTap() {
               <p className="text-white/90">Answer quickly and accurately</p>
             </div>
             <div className="text-right">
-              <p className="text-sm text-white/70">Hearts</p>
+              <p className="text-sm text-white/70">Lamp Oil</p>
               <p className="text-2xl font-bold">{hearts}/5</p>
             </div>
           </div>

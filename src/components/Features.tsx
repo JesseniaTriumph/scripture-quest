@@ -17,7 +17,7 @@ export const Features = () => {
     {
       icon: iconAchievement,
       title: "Track Your Growth",
-      description: "Earn XP, unlock achievements, and maintain daily streaks. Watch your spiritual journey flourish!",
+      description: "Earn XP, unlock achievements, and build your daily charge. Watch your spiritual journey flourish!",
     },
   ];
 
