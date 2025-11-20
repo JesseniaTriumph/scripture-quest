@@ -12,6 +12,9 @@ import CopyMode from "./pages/CopyMode";
 import WordScramble from "./pages/WordScramble";
 import RecallMode from "./pages/RecallMode";
 import QuickTap from "./pages/QuickTap";
+import MemoryMatch from "./pages/MemoryMatch";
+import VerseBuilder from "./pages/VerseBuilder";
+import Review from "./pages/Review";
 import NotFound from "./pages/NotFound";
 import { GameSelectionScreen } from "@/components/GameSelectionScreen";
 
@@ -27,11 +30,14 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/review" element={<Review />} />
             <Route path="/game-select" element={<GameSelectionScreen />} />
             <Route path="/game/preview" element={<PreviewMode />} />
             <Route path="/game/copy" element={<CopyMode />} />
             <Route path="/game/fill-blank" element={<FillInTheBlank />} />
             <Route path="/game/scramble" element={<WordScramble />} />
+            <Route path="/game/verse-builder" element={<VerseBuilder />} />
+            <Route path="/game/memory-match" element={<MemoryMatch />} />
             <Route path="/game/recall" element={<RecallMode />} />
             <Route path="/game/quick-tap" element={<QuickTap />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

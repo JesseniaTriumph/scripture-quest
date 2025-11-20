@@ -25,6 +25,8 @@ interface GameType {
   difficulty: "Easy" | "Medium" | "Hard";
 }
 
+import { Grid2x2, Boxes } from "lucide-react";
+
 const GAME_TYPES: GameType[] = [
   {
     id: "preview",
@@ -65,6 +67,26 @@ const GAME_TYPES: GameType[] = [
     requiredMastery: 1,
     stage: "PRACTICE",
     difficulty: "Medium"
+  },
+  {
+    id: "verse-builder",
+    name: "Verse Builder",
+    description: "Drag and drop words in the correct order",
+    icon: <Boxes className="w-6 h-6" />,
+    route: "/game/verse-builder",
+    requiredMastery: 1,
+    stage: "PRACTICE",
+    difficulty: "Medium"
+  },
+  {
+    id: "memory-match",
+    name: "Memory Match",
+    description: "Match verse references with their text",
+    icon: <Grid2x2 className="w-6 h-6" />,
+    route: "/game/memory-match",
+    requiredMastery: 2,
+    stage: "MASTER",
+    difficulty: "Hard"
   },
   {
     id: "recall",
