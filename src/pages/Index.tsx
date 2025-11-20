@@ -2,6 +2,7 @@ import { Hero } from "@/components/Hero";
 import { DailyVerse } from "@/components/DailyVerse";
 import { Features } from "@/components/Features";
 import { GamesHub } from "@/components/GamesHub";
+import { VersesHub } from "@/components/VersesHub";
 import { ProfileDashboard } from "@/components/ProfileDashboard";
 import { CallToAction } from "@/components/CallToAction";
 import { HeartsDisplay } from "@/components/HeartsDisplay";
@@ -21,6 +22,7 @@ const Index = () => {
         </div>
       )}
       <DailyVerse />
+      <VersesHub />
       <Features />
       <GamesHub />
       <ProfileDashboard />
