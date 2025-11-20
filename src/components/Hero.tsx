@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Sparkles, Trophy, Users } from "lucide-react";
-import heroMascot from "@/assets/hero-mascot.jpg";
+import characterHope from "@/assets/character-hope.png";
+import characterPhoebe from "@/assets/character-phoebe.png";
 
 export const Hero = () => {
   return (
@@ -10,7 +11,7 @@ export const Hero = () => {
           <div className="space-y-6 text-center lg:text-left">
             <div className="inline-block">
               <span className="px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-semibold">
-                🎮 Duolingo for Scripture
+                🎮 Gamified Scripture Learning
               </span>
             </div>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
@@ -53,14 +54,26 @@ export const Hero = () => {
             </div>
           </div>
           <div className="relative">
-            <div className="relative animate-float">
-              <img 
-                src={heroMascot} 
-                alt="Scripture Quest Mascot - Friendly owl guide" 
-                className="w-full max-w-md mx-auto rounded-3xl shadow-2xl"
-              />
-              <div className="absolute -top-4 -right-4 bg-accent text-accent-foreground px-6 py-3 rounded-2xl shadow-lg font-bold animate-pulse-soft">
-                🔥 Join Today!
+            <div className="relative flex gap-6 justify-center items-center animate-float">
+              <div className="relative">
+                <img
+                  src={characterHope}
+                  alt="Hope - Your guiding light"
+                  className="w-48 h-48 object-contain drop-shadow-2xl"
+                />
+              </div>
+              <div className="relative">
+                <img
+                  src={characterPhoebe}
+                  alt="Phoebe - Your motivator"
+                  className="w-56 h-56 object-contain drop-shadow-2xl"
+                />
+                <div className="absolute -top-4 -right-4 bg-primary text-primary-foreground px-6 py-3 rounded-2xl shadow-lg animate-pulse-soft">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="h-5 w-5" />
+                    <span className="font-bold">Let's begin!</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
