@@ -2,8 +2,26 @@ import { Button } from "@/components/ui/button";
 import { Sparkles, Trophy, Users } from "lucide-react";
 import characterHope from "@/assets/character-hope.png";
 import characterPhoebe from "@/assets/character-phoebe.png";
+import { useToast } from "@/hooks/use-toast";
 
 export const Hero = () => {
+  const { toast } = useToast();
+
+  const handleStartLearning = () => {
+    toast({
+      title: "Welcome to Scripture Quest! 🎮",
+      description: "Choose a game below to start memorizing verses!",
+    });
+    document.getElementById("games-hub")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleWatchDemo = () => {
+    toast({
+      title: "Demo Coming Soon!",
+      description: "We're preparing an exciting walkthrough of Scripture Quest.",
+    });
+  };
+
   return (
     <section className="gradient-hero min-h-screen flex items-center justify-center px-4 py-20">
       <div className="container max-w-6xl">
@@ -24,11 +42,20 @@ export const Hero = () => {
               Learn Bible verses through interactive games, build daily streaks, and grow with a supportive community. Start your spiritual journey today!
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
-              <Button size="lg" className="gradient-primary text-white hover:opacity-90 transition-opacity shadow-lg">
+              <Button 
+                size="lg" 
+                className="gradient-primary text-white hover:opacity-90 transition-opacity shadow-lg"
+                onClick={handleStartLearning}
+              >
                 <Sparkles className="mr-2 h-5 w-5" />
                 Start Learning Free
               </Button>
-              <Button size="lg" variant="outline" className="border-2 hover:bg-secondary">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="border-2 hover:bg-secondary"
+                onClick={handleWatchDemo}
+              >
                 Watch Demo
               </Button>
             </div>

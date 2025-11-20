@@ -68,7 +68,7 @@ export const GamesHub = () => {
   ];
 
   return (
-    <section className="py-20 px-4">
+    <section id="games-hub" className="py-20 px-4">
       <div className="container max-w-7xl">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
