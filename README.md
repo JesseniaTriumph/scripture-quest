@@ -1,8 +1,43 @@
-# Welcome to your Lovable project
+# Scripture Quest
+
+**A gamified Scripture memorization app that makes learning Bible verses fun and engaging.**
 
 ## Project info
 
 **URL**: https://lovable.dev/projects/eca16520-cebd-43fb-b966-40cb766f1aab
+
+## About Scripture Quest
+
+Scripture Quest is a mobile-first web application designed to help users memorize Bible verses through interactive mini-games, daily streaks, badges, and a supportive community. Inspired by successful learning platforms, Scripture Quest combines proven gamification mechanics with grace-based pedagogy to make Scripture memory accessible, enjoyable, and sustainable.
+
+### Key Features
+
+- 🎮 **8 Interactive Mini-Games**: Fill-in-the-blank, word scramble, word search, hangman, quick tap, typing drill, memory match, and daily "Lordle"
+- 🔥 **Daily Streaks & Habits**: Build consistency with streak tracking and daily goals
+- 🏆 **XP, Levels & Badges**: Earn rewards for progress and achievements
+- 💎 **Hearts & Coins**: Game economy with lives and in-app currency
+- 👥 **Social Features**: Friends, church groups, leaderboards, and challenges
+- 🎯 **Curated Scripture Paths**: Topical collections like Foundations, Comfort, Identity, Prayer
+- 📱 **Mobile-First Design**: Responsive, beautiful, and accessible
+- 🌟 **8 Character Guides**: Diverse cast of symbolic and human guides to encourage your journey
+
+### Character System
+
+Scripture Quest features 8 unique characters:
+
+**Symbolic Characters:**
+- **Hope** - The Guiding Light (primary mascot)
+- **Marcus** - The Scribe of Wisdom
+- **Selah** - The Rest & Reflection Spirit
+
+**Human Guides:**
+- **Phoebe** - The Motivator
+- **Kai** - The Disciplinarian
+- **Zola** - The Encourager
+- **Rhys** - The Challenger
+- **Juno** - The Guide
+
+See [CHARACTER_SYSTEM.md](./CHARACTER_SYSTEM.md) for full character details.
 
 ## How can I edit this code?
 
@@ -58,13 +93,17 @@ This project is built with:
 - TypeScript
 - React
 - shadcn-ui
-- Tailwind CSS
+- Lovable Cloud (Supabase backend)
 
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/eca16520-cebd-43fb-b966-40cb766f1aab) and click on Share -> Publish.
 
-## Can I connect a custom domain to my Lovable project?
+## Roadmap
+
+See [ROADMAP.md](./ROADMAP.md) for the full phased implementation plan.
+
+## Can I connect a custom domain to my Scripture Quest project?
 
 Yes, you can!
 
