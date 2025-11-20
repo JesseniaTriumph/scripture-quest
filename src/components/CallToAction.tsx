@@ -1,7 +1,25 @@
 import { Button } from "@/components/ui/button";
 import { Sparkles, ArrowRight } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 export const CallToAction = () => {
+  const { toast } = useToast();
+
+  const handleGetStarted = () => {
+    toast({
+      title: "Let's Begin! 🎮",
+      description: "Scroll up to choose your first game and start memorizing!",
+    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleLearnMore = () => {
+    toast({
+      title: "Learn More",
+      description: "Discover how Scripture Quest makes Bible memorization fun and effective!",
+    });
+  };
+
   return (
     <section className="py-20 px-4">
       <div className="container max-w-4xl">
@@ -19,11 +37,21 @@ export const CallToAction = () => {
               Join thousands of believers building a daily Bible habit through fun, interactive games. Start your journey today—completely free!
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" variant="secondary" className="text-lg px-8 py-6 shadow-xl hover:scale-105 transition-transform">
+              <Button 
+                size="lg" 
+                variant="secondary" 
+                className="text-lg px-8 py-6 shadow-xl hover:scale-105 transition-transform"
+                onClick={handleGetStarted}
+              >
                 Get Started Free
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <Button size="lg" variant="outline" className="text-lg px-8 py-6 bg-white/10 border-white/30 text-white hover:bg-white/20">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="text-lg px-8 py-6 bg-white/10 border-white/30 text-white hover:bg-white/20"
+                onClick={handleLearnMore}
+              >
                 Learn More
               </Button>
             </div>

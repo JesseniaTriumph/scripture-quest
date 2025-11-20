@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { LucideIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useToast } from "@/hooks/use-toast";
 
 interface GameCardProps {
   title: string;
@@ -22,10 +23,26 @@ export const GameCard = ({
   isLocked = false,
   isNew = false,
 }: GameCardProps) => {
+  const { toast } = useToast();
+  
   const difficultyColor = {
     Easy: "bg-success/10 text-success",
     Medium: "bg-accent/10 text-accent-foreground",
     Hard: "bg-destructive/10 text-destructive",
+  };
+
+  const handlePlay = () => {
+    if (isLocked) {
+      toast({
+        title: "Game Locked 🔒",
+        description: "Complete more verses to unlock this game!",
+      });
+    } else {
+      toast({
+        title: `Starting ${title}! 🎮`,
+        description: `Get ready to earn +${xpReward} XP!`,
+      });
+    }
   };
 
   return (
@@ -61,6 +78,7 @@ export const GameCard = ({
             size="sm" 
             disabled={isLocked}
             className="gradient-primary text-white hover:opacity-90"
+            onClick={handlePlay}
           >
             {isLocked ? "Locked" : "Play"}
           </Button>
