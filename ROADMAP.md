@@ -18,7 +18,7 @@ Building a Duolingo-style gamified scripture memorization app with world-class U
 - [x] Typography system
 
 ### Marketing/Landing Page Components
-- [x] Hero section with mascot
+- [x] Hero section with mascot - "Scripture Quest - A Learning Journey Into The Word"
 - [x] Daily Verse showcase
 - [x] Features section (3 key benefits)
 - [x] Games hub (8 game cards displayed)
@@ -32,28 +32,54 @@ Building a Duolingo-style gamified scripture memorization app with world-class U
 - [x] Icon: Community
 - [x] Icon: Achievement
 
+### Backend & Database (Lovable Cloud)
+- [x] Supabase integration via Lovable Cloud
+- [x] Authentication system
+- [x] Database tables: profiles, collections, verses, verse_progress
+- [x] Row Level Security (RLS) policies
+- [x] Hearts system (5 hearts, regeneration logic)
+- [x] XP, coins, streak tracking in profiles table
+
+### Progressive Learning Journey (4 Stages)
+- [x] **STAGE 1 - LEARN** (Mastery Level 0): Preview Mode, Copy Mode
+- [x] **STAGE 2 - PRACTICE** (Mastery Level 1): Fill-in-the-Blank, Word Scramble, Verse Builder
+- [x] **STAGE 3 - MASTER** (Mastery Level 2): Memory Match, Recall Mode, Quick Tap
+- [x] **STAGE 4 - REVIEW**: Spaced repetition system with due date tracking
+- [x] GameSelectionScreen component with mastery-based unlocking
+- [x] VerseCard updated to show stage-appropriate buttons
+- [x] Review page with spaced repetition logic
+
+### All 8 Mini-Games Built
+- [x] Preview Mode (LEARN) - Read and familiarize
+- [x] Copy Mode (LEARN) - Type while viewing
+- [x] Fill-in-the-Blank (PRACTICE) - Select correct words
+- [x] Word Scramble (PRACTICE) - Unscramble words
+- [x] Verse Builder (PRACTICE) - Drag and drop words
+- [x] Memory Match (MASTER) - Match references with text
+- [x] Recall Mode (MASTER) - Type from memory
+- [x] Quick Tap (MASTER) - Rapid-fire questions
+
 ---
 
-## 📋 PHASE 1: MVP FOUNDATION (Weeks 1-4)
+## 📋 PHASE 1: MVP FOUNDATION (Weeks 1-4) - ~60% COMPLETE
 
 **Goal:** Core game loop + XP/streak mechanics + KJV verses working
 **Motto:** Make it playable, addictive, and rewarding
 
-### 1.1 Backend & Authentication Setup
+### 1.1 Backend & Authentication Setup ✅ COMPLETE
 **Priority:** CRITICAL - Required for all user progress
-- [ ] Enable Lovable Cloud
-- [ ] Set up authentication
-  - [ ] Email/password auth
-  - [ ] Sign up flow
-  - [ ] Login flow
-  - [ ] Session persistence
-- [ ] Create database schema
-  - [ ] users table with profile data
-  - [ ] user_progress table (XP, level, streak, coins, hearts)
-  - [ ] user_verses table (mastery status per verse)
-  - [ ] user_badges table
-  - [ ] user_activities table (session history)
-- [ ] Set up Row Level Security (RLS) policies
+- [x] Enable Lovable Cloud
+- [x] Set up authentication
+  - [x] Email/password auth
+  - [x] Sign up flow
+  - [x] Login flow
+  - [x] Session persistence
+- [x] Create database schema
+  - [x] profiles table with user data (XP, level, streak, coins, hearts)
+  - [x] collections table
+  - [x] verses table
+  - [x] verse_progress table (mastery status per verse)
+- [x] Set up Row Level Security (RLS) policies
 
 ### 1.2 Bible Verses API Integration
 **Priority:** CRITICAL - Core content source
@@ -155,45 +181,34 @@ Building a Duolingo-style gamified scripture memorization app with world-class U
 - [ ] Persist coins to database
 - [ ] (Phase 2: In-app store for coins)
 
-### 1.6 Build First 2 Playable Games
+### 1.6 All 8 Games Built ✅ COMPLETE
 **Priority:** HIGH - Prove the core loop works
 
-#### Game 1: Verse Fill-in-the-Blank
-- [ ] Create VerseCompletionGame component
-- [ ] Game flow
-  - [ ] Show full verse (3 seconds preview)
-  - [ ] Hide 1-3 key words
-  - [ ] Show 4 multiple choice options
-  - [ ] Check answer on selection
-  - [ ] Show feedback (green ✓ or red ✗)
-  - [ ] Display full verse again
-- [ ] Scoring logic
-  - [ ] Base XP
-  - [ ] Deduct heart on wrong answer
-  - [ ] Track accuracy
-- [ ] UI polish
-  - [ ] Smooth transitions
-  - [ ] Color flashes
-  - [ ] Sound effects (optional)
-- [ ] Progress to next verse
-- [ ] Complete game summary screen
+#### Progressive Learning Journey (4 Stages)
+- [x] **STAGE 1 - LEARN** (Mastery 0)
+  - [x] Preview Mode: Read and familiarize with verse
+  - [x] Copy Mode: Type the verse while viewing it
+- [x] **STAGE 2 - PRACTICE** (Mastery 1)
+  - [x] Fill-in-the-Blank: Select correct words to complete
+  - [x] Word Scramble: Unscramble words to rebuild
+  - [x] Verse Builder: Drag and drop words in order
+- [x] **STAGE 3 - MASTER** (Mastery 2)
+  - [x] Memory Match: Match verse references with text
+  - [x] Recall Mode: Type entire verse from memory
+  - [x] Quick Tap: Answer rapid-fire questions
+- [x] **STAGE 4 - REVIEW**
+  - [x] Spaced repetition review system
+  - [x] Due date tracking
+  - [x] Review page with filtering
 
-#### Game 2: Word Scramble
-- [ ] Create WordScrambleGame component
-- [ ] Game flow
-  - [ ] Show full verse preview
-  - [ ] Display shuffled words
-  - [ ] User taps words in order
-  - [ ] Show correct/incorrect feedback per word
-  - [ ] Allow reset/undo
-  - [ ] Complete when all words placed correctly
-- [ ] Timer (optional pressure mechanic)
-- [ ] Time bonus for speed
-- [ ] UI polish
-  - [ ] Drag-and-drop or tap selection
-  - [ ] Visual feedback on correct placement
-  - [ ] Confetti on completion
-- [ ] Summary screen
+#### Game Features Implemented
+- [x] Mastery-based unlocking system
+- [x] Stage progression (LEARN → PRACTICE → MASTER → REVIEW)
+- [x] GameSelectionScreen with visual progress indicator
+- [x] XP and coin rewards per game
+- [x] Hearts cost on wrong answers
+- [x] Confetti celebrations on completion
+- [x] Progress tracking in verse_progress table
 
 ### 1.7 Basic UI Components & Screens
 **Priority:** HIGH - User-facing structure
