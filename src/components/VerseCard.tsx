@@ -28,6 +28,14 @@ export const VerseCard = ({ verse, onPlay, requiredMastery = 0 }: VerseCardProps
   const isLocked = requiredMastery > 0 && currentMastery < requiredMastery;
   const accuracy = getAccuracy(progress);
 
+  const getStageInfo = () => {
+    if (currentMastery === 0) return { stage: "LEARN", label: "Preview & Learn", color: "bg-blue-500" };
+    if (currentMastery === 1) return { stage: "PRACTICE", label: "Practice Games", color: "bg-purple-500" };
+    return { stage: "MASTER", label: "Master It", color: "bg-success" };
+  };
+
+  const stageInfo = getStageInfo();
+
   const difficultyColor = {
     Easy: "bg-success/10 text-success",
     Medium: "bg-accent/10 text-accent-foreground",
@@ -100,10 +108,10 @@ export const VerseCard = ({ verse, onPlay, requiredMastery = 0 }: VerseCardProps
           <Button
             size="sm"
             disabled={isLocked || authLoading}
-            className="gradient-primary text-white hover:opacity-90"
+            className={`${stageInfo.color} text-white hover:opacity-90`}
             onClick={() => onPlay(verse)}
           >
-            {authLoading ? "Loading..." : isLocked ? "Locked" : "Play"}
+            {authLoading ? "Loading..." : isLocked ? "🔒 Locked" : `▶ ${stageInfo.label}`}
           </Button>
         </div>
       </div>

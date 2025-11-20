@@ -70,8 +70,8 @@ export const VersesHub = () => {
       return;
     }
 
-    console.log("Navigating to game:", `/game/fill-blank?verseId=${verse.id}`);
-    navigate(`/game/fill-blank?verseId=${verse.id}`);
+    console.log("Navigating to game selection:", `/game-select?verseId=${verse.id}`);
+    navigate(`/game-select?verseId=${verse.id}&ref=${verse.reference}`);
   };
 
   if (loading) {
