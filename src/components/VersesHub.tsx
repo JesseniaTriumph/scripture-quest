@@ -28,7 +28,7 @@ export const VersesHub = () => {
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,15 +51,26 @@ export const VersesHub = () => {
   }, []);
 
   const handlePlay = (verse: Verse) => {
+    console.log("Play button clicked", { verse: verse.reference, user: !!user, authLoading });
+    
+    if (authLoading) {
+      toast({
+        title: "Loading...",
+        description: "Please wait while we load your account",
+      });
+      return;
+    }
+
     if (!user) {
       toast({
         title: "Sign In Required",
         description: "Please sign in to play games!",
       });
-      navigate("/auth");
+      setTimeout(() => navigate("/auth"), 100);
       return;
     }
 
+    console.log("Navigating to game:", `/game/fill-blank?verseId=${verse.id}`);
     navigate(`/game/fill-blank?verseId=${verse.id}`);
   };
 

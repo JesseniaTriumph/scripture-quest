@@ -21,7 +21,7 @@ interface VerseCardProps {
 }
 
 export const VerseCard = ({ verse, onPlay, requiredMastery = 0 }: VerseCardProps) => {
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const { progress, getMasteryLabel, getMasteryColor, getAccuracy } = useVerseProgress(verse.id);
 
   const currentMastery = progress?.mastery_level ?? 0;
@@ -99,11 +99,11 @@ export const VerseCard = ({ verse, onPlay, requiredMastery = 0 }: VerseCardProps
           </div>
           <Button
             size="sm"
-            disabled={isLocked || !user}
+            disabled={isLocked || authLoading}
             className="gradient-primary text-white hover:opacity-90"
             onClick={() => onPlay(verse)}
           >
-            {isLocked ? "Locked" : "Play"}
+            {authLoading ? "Loading..." : isLocked ? "Locked" : "Play"}
           </Button>
         </div>
       </div>
