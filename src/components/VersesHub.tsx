@@ -3,6 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { VerseCard } from "./VerseCard";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface Verse {
@@ -27,6 +28,7 @@ export const VersesHub = () => {
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,11 +51,16 @@ export const VersesHub = () => {
   }, []);
 
   const handlePlay = (verse: Verse) => {
-    toast({
-      title: `Starting ${verse.reference}! 📖`,
-      description: `Get ready to memorize Scripture and earn +${verse.xp_reward} XP!`,
-    });
-    // TODO: Navigate to game page
+    if (!user) {
+      toast({
+        title: "Sign In Required",
+        description: "Please sign in to play games!",
+      });
+      navigate("/auth");
+      return;
+    }
+
+    navigate(`/game/fill-blank?verseId=${verse.id}`);
   };
 
   if (loading) {
