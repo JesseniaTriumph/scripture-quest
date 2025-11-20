@@ -9,6 +9,8 @@ import { useHearts } from "@/hooks/useHearts";
 import { ArrowLeft, Eye, EyeOff, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import confetti from "canvas-confetti";
+import { CharacterGuide } from "@/components/CharacterGuide";
+import { CHARACTERS, getCharacterForContext } from "@/types/characters";
 
 interface Verse {
   id: string;
@@ -162,6 +164,11 @@ export default function RecallMode() {
       </div>
 
       <div className="max-w-3xl mx-auto px-4 py-8">
+        {/* Character Guide - Marcus for Master stage */}
+        <CharacterGuide 
+          character={CHARACTERS.marcus}
+          message="This requires deep focus. Take your time and recall what you've learned."
+        />
         <Card className="p-8 mb-6">
           <div className="text-center mb-6">
             <h2 className="text-2xl font-bold text-primary mb-2">{verse?.reference}</h2>

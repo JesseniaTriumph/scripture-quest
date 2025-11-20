@@ -13,6 +13,8 @@ import {
   ArrowLeft
 } from "lucide-react";
 import { useVerseProgress } from "@/hooks/useVerseProgress";
+import { CharacterGuide } from "@/components/CharacterGuide";
+import { getCharacterForContext } from "@/types/characters";
 
 interface GameType {
   id: string;
@@ -139,6 +141,12 @@ export const GameSelectionScreen = () => {
     { name: "MASTER", mastery: 2, unlocked: currentMastery >= 2 }
   ];
 
+  // Determine which character to show based on mastery
+  const currentCharacter = getCharacterForContext(
+    currentMastery === 0 ? "learn" : currentMastery === 1 ? "practice" : "master",
+    currentMastery
+  );
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -156,6 +164,11 @@ export const GameSelectionScreen = () => {
           <h1 className="text-3xl font-bold mb-2">{verseRef}</h1>
           <p className="text-white/90">Choose your learning mode</p>
         </div>
+      </div>
+
+      {/* Character Guide */}
+      <div className="max-w-4xl mx-auto px-4 pt-6">
+        <CharacterGuide character={currentCharacter} />
       </div>
 
       {/* Progress Indicator */}

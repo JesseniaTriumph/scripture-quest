@@ -8,6 +8,8 @@ import { useHearts } from "@/hooks/useHearts";
 import { ArrowLeft, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import confetti from "canvas-confetti";
+import { CharacterGuide } from "@/components/CharacterGuide";
+import { CHARACTERS } from "@/types/characters";
 
 interface Verse {
   id: string;
@@ -222,6 +224,11 @@ export default function MemoryMatch() {
       </div>
 
       <div className="max-w-4xl mx-auto px-4 py-8">
+        {/* Character Guide - Marcus for Master stage */}
+        <CharacterGuide 
+          character={CHARACTERS.marcus}
+          message="Test your memory and connect the pieces. This challenges your mastery."
+        />
         {!isComplete && (
           <div className="mb-6 text-center">
             <div className="flex justify-center gap-8 text-lg">

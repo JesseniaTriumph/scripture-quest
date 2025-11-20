@@ -7,6 +7,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { ArrowLeft, Calendar, Target, TrendingUp } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { CharacterGuide } from "@/components/CharacterGuide";
+import { CHARACTERS } from "@/types/characters";
 
 interface VerseWithProgress {
   id: string;
@@ -141,6 +143,11 @@ export default function Review() {
       </div>
 
       <div className="max-w-4xl mx-auto px-4 py-8">
+        {/* Character Guide - Selah for review/rest */}
+        <CharacterGuide 
+          character={CHARACTERS.selah}
+          message="Take time to reflect on what you've learned. Rest and review strengthen your foundation."
+        />
         {/* Stats Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           <Card className="p-6 text-center">

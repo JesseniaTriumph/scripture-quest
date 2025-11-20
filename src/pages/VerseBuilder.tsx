@@ -8,6 +8,8 @@ import { useHearts } from "@/hooks/useHearts";
 import { ArrowLeft, RotateCcw, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import confetti from "canvas-confetti";
+import { CharacterGuide } from "@/components/CharacterGuide";
+import { CHARACTERS } from "@/types/characters";
 
 interface Verse {
   id: string;
@@ -206,6 +208,11 @@ export default function VerseBuilder() {
       </div>
 
       <div className="max-w-4xl mx-auto px-4 py-8">
+        {/* Character Guide - Kai for Practice stage */}
+        <CharacterGuide 
+          character={CHARACTERS.kai}
+          message="Build the verse piece by piece. Order and precision matter."
+        />
         <Card className="p-8 mb-6">
           <div className="text-center mb-6">
             <h2 className="text-2xl font-bold text-primary mb-2">{verse?.reference}</h2>
