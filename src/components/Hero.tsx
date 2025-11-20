@@ -1,13 +1,21 @@
 import { Button } from "@/components/ui/button";
-import { Sparkles, Trophy, Users } from "lucide-react";
+import { Sparkles, Trophy, Users, LogIn } from "lucide-react";
 import characterHope from "@/assets/character-hope.png";
 import characterPhoebe from "@/assets/character-phoebe.png";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 export const Hero = () => {
   const { toast } = useToast();
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
 
   const handleStartLearning = () => {
+    if (!user) {
+      navigate("/auth");
+      return;
+    }
     toast({
       title: "Welcome to Scripture Quest! 🎮",
       description: "Choose a game below to start memorizing verses!",
@@ -25,6 +33,27 @@ export const Hero = () => {
   return (
     <section className="gradient-hero min-h-screen flex items-center justify-center px-4 py-20">
       <div className="container max-w-6xl">
+        {/* Auth button in top right */}
+        <div className="absolute top-6 right-6">
+          {user ? (
+            <Button 
+              variant="outline" 
+              onClick={() => signOut()}
+              className="border-2"
+            >
+              Sign Out
+            </Button>
+          ) : (
+            <Button 
+              variant="outline" 
+              onClick={() => navigate("/auth")}
+              className="border-2"
+            >
+              <LogIn className="mr-2 h-4 w-4" />
+              Sign In
+            </Button>
+          )}
+        </div>
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6 text-center lg:text-left">
             <div className="inline-block">

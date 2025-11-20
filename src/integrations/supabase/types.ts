@@ -14,7 +14,134 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      collections: {
+        Row: {
+          created_at: string
+          description: string | null
+          icon: string | null
+          id: string
+          name: string
+          order_index: number
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: string
+          name: string
+          order_index: number
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: string
+          name?: string
+          order_index?: number
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_config: Json | null
+          coins: number
+          created_at: string
+          display_name: string | null
+          goal_type: string | null
+          hearts: number
+          hearts_updated_at: string
+          id: string
+          is_premium: boolean
+          last_active_date: string | null
+          level: number
+          reminder_time: string | null
+          streak_count: number
+          updated_at: string
+          user_id: string
+          xp: number
+        }
+        Insert: {
+          avatar_config?: Json | null
+          coins?: number
+          created_at?: string
+          display_name?: string | null
+          goal_type?: string | null
+          hearts?: number
+          hearts_updated_at?: string
+          id: string
+          is_premium?: boolean
+          last_active_date?: string | null
+          level?: number
+          reminder_time?: string | null
+          streak_count?: number
+          updated_at?: string
+          user_id: string
+          xp?: number
+        }
+        Update: {
+          avatar_config?: Json | null
+          coins?: number
+          created_at?: string
+          display_name?: string | null
+          goal_type?: string | null
+          hearts?: number
+          hearts_updated_at?: string
+          id?: string
+          is_premium?: boolean
+          last_active_date?: string | null
+          level?: number
+          reminder_time?: string | null
+          streak_count?: number
+          updated_at?: string
+          user_id?: string
+          xp?: number
+        }
+        Relationships: []
+      }
+      verses: {
+        Row: {
+          collection_id: string | null
+          created_at: string
+          difficulty: string
+          id: string
+          keywords: string[]
+          reference: string
+          text: string
+          translation: string
+          xp_reward: number
+        }
+        Insert: {
+          collection_id?: string | null
+          created_at?: string
+          difficulty: string
+          id?: string
+          keywords?: string[]
+          reference: string
+          text: string
+          translation?: string
+          xp_reward?: number
+        }
+        Update: {
+          collection_id?: string | null
+          created_at?: string
+          difficulty?: string
+          id?: string
+          keywords?: string[]
+          reference?: string
+          text?: string
+          translation?: string
+          xp_reward?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "verses_collection_id_fkey"
+            columns: ["collection_id"]
+            isOneToOne: false
+            referencedRelation: "collections"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
