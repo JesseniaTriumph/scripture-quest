@@ -3,12 +3,14 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { 
-  Eye, 
+  Search, 
   Keyboard, 
   Shuffle, 
   Grid3x3, 
-  Brain, 
   Zap,
+  Trophy,
+  Unlock,
+  Disc3,
   Lock,
   ArrowLeft
 } from "lucide-react";
@@ -27,42 +29,30 @@ interface GameType {
   difficulty: "Easy" | "Medium" | "Hard";
 }
 
-import { Grid2x2, Boxes } from "lucide-react";
-
 const GAME_TYPES: GameType[] = [
   {
-    id: "preview",
-    name: "Preview Mode",
-    description: "Read and familiarize yourself with the verse",
-    icon: <Eye className="w-6 h-6" />,
-    route: "/game/preview",
+    id: "word-search",
+    name: "Word Search",
+    description: "Find the hidden words to complete the verse",
+    icon: <Search className="w-6 h-6" />,
+    route: "/game/word-search",
     requiredMastery: 0,
     stage: "LEARN",
     difficulty: "Easy"
   },
   {
-    id: "copy",
-    name: "Copy Mode",
-    description: "Type the verse while viewing it",
-    icon: <Keyboard className="w-6 h-6" />,
-    route: "/game/copy",
-    requiredMastery: 0,
-    stage: "LEARN",
-    difficulty: "Easy"
-  },
-  {
-    id: "fill-blank",
-    name: "Fill in the Blank",
-    description: "Select the correct words to complete the verse",
+    id: "verse-completion",
+    name: "Verse Completion",
+    description: "Fill in the missing words from memory",
     icon: <Grid3x3 className="w-6 h-6" />,
     route: "/game/fill-blank",
-    requiredMastery: 1,
-    stage: "PRACTICE",
-    difficulty: "Medium"
+    requiredMastery: 0,
+    stage: "LEARN",
+    difficulty: "Easy"
   },
   {
-    id: "scramble",
-    name: "Word Scramble",
+    id: "verse-scramble",
+    name: "Verse Scramble",
     description: "Unscramble the words to rebuild the verse",
     icon: <Shuffle className="w-6 h-6" />,
     route: "/game/scramble",
@@ -71,41 +61,51 @@ const GAME_TYPES: GameType[] = [
     difficulty: "Medium"
   },
   {
-    id: "verse-builder",
-    name: "Verse Builder",
-    description: "Drag and drop words in the correct order",
-    icon: <Boxes className="w-6 h-6" />,
-    route: "/game/verse-builder",
+    id: "memory-match",
+    name: "Memory Match",
+    description: "Match verses with their references",
+    icon: <Grid3x3 className="w-6 h-6" />,
+    route: "/game/memory-match",
     requiredMastery: 1,
     stage: "PRACTICE",
     difficulty: "Medium"
   },
   {
-    id: "memory-match",
-    name: "Memory Match",
-    description: "Match verse references with their text",
-    icon: <Grid2x2 className="w-6 h-6" />,
-    route: "/game/memory-match",
-    requiredMastery: 2,
-    stage: "MASTER",
-    difficulty: "Hard"
-  },
-  {
-    id: "recall",
-    name: "Recall Mode",
-    description: "Type the entire verse from memory",
-    icon: <Brain className="w-6 h-6" />,
-    route: "/game/recall",
-    requiredMastery: 2,
-    stage: "MASTER",
-    difficulty: "Hard"
-  },
-  {
-    id: "quick-tap",
-    name: "Quick Tap",
-    description: "Answer rapid-fire questions about the verse",
+    id: "typing-race",
+    name: "Typing Race",
+    description: "Type the complete verse for speed",
     icon: <Zap className="w-6 h-6" />,
+    route: "/game/copy",
+    requiredMastery: 1,
+    stage: "PRACTICE",
+    difficulty: "Medium"
+  },
+  {
+    id: "bible-quiz",
+    name: "Bible Quiz Showdown",
+    description: "Answer questions about verses and their context",
+    icon: <Trophy className="w-6 h-6" />,
     route: "/game/quick-tap",
+    requiredMastery: 2,
+    stage: "MASTER",
+    difficulty: "Hard"
+  },
+  {
+    id: "scripture-reveal",
+    name: "Scripture Reveal",
+    description: "Unlock the hidden word letter by letter",
+    icon: <Unlock className="w-6 h-6" />,
+    route: "/game/scripture-reveal",
+    requiredMastery: 2,
+    stage: "MASTER",
+    difficulty: "Hard"
+  },
+  {
+    id: "scripture-spinoff",
+    name: "Scripture SpinOff",
+    description: "Spin to reveal letters and solve the phrase",
+    icon: <Disc3 className="w-6 h-6" />,
+    route: "/game/scripture-spinoff",
     requiredMastery: 2,
     stage: "MASTER",
     difficulty: "Hard"
