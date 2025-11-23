@@ -2,7 +2,7 @@ import { Hero } from "@/components/Hero";
 import { DailyVerse } from "@/components/DailyVerse";
 import { Features } from "@/components/Features";
 import { GamesHub } from "@/components/GamesHub";
-import { VersesHub } from "@/components/VersesHub";
+import { PathView } from "@/components/PathView";
 import { ProfileDashboard } from "@/components/ProfileDashboard";
 import { CallToAction } from "@/components/CallToAction";
 import { HeartsDisplay } from "@/components/HeartsDisplay";
@@ -12,6 +12,23 @@ import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Index Page - Main landing and dashboard
+ * 
+ * WHY: Replaced VersesHub with PathView to implement Phase 1.1
+ * Path-Based Navigation System. This creates a Duolingo-style
+ * linear progression that reduces decision paralysis.
+ * 
+ * LAYOUT:
+ * - Hero section (value prop)
+ * - User stats (if logged in)
+ * - Daily verse (motivational)
+ * - PathView (main engagement loop) ← NEW
+ * - Features showcase
+ * - Games hub (explore all games)
+ * - Profile dashboard
+ * - Call to action
+ */
 const Index = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -36,7 +53,8 @@ const Index = () => {
         </div>
       )}
       <DailyVerse />
-      <VersesHub />
+      {/* PHASE 1.1: Path-Based Navigation replaces tab-based VersesHub */}
+      <PathView />
       <Features />
       <GamesHub />
       <ProfileDashboard />
