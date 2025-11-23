@@ -192,7 +192,15 @@ export default function ScriptureReveal() {
 
         <h1 className="text-2xl font-bold text-center">{verse.reference}</h1>
 
-        <CharacterGuide character={getCharacterForContext("master")} />
+        <CharacterGuide 
+          character={getCharacterForContext("master")} 
+          message={completed 
+            ? "Incredible! You revealed the word! The light of understanding is yours! 🌟" 
+            : failed
+            ? "Don't give up! Try again and the word will be revealed."
+            : "Guess letters to reveal the hidden word. Each wrong guess dims a light!"
+          }
+        />
 
         <Card className="p-6">
           <div className="space-y-6">

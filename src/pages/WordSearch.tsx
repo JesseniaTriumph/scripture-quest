@@ -261,7 +261,13 @@ export default function WordSearch() {
 
         <h1 className="text-2xl font-bold text-center">{verse.reference}</h1>
 
-        <CharacterGuide character={getCharacterForContext("learn")} />
+        <CharacterGuide 
+          character={getCharacterForContext("learn")} 
+          message={completed 
+            ? "Amazing work! You found all the words! 🎉" 
+            : "Find all the hidden words from the verse. Drag across letters to select them!"
+          }
+        />
 
         <Card className="p-6">
           <div className="space-y-4">
