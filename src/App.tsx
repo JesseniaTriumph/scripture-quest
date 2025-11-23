@@ -17,6 +17,9 @@ import VerseBuilder from "./pages/VerseBuilder";
 import Review from "./pages/Review";
 import NotFound from "./pages/NotFound";
 import { GameSelectionScreen } from "@/components/GameSelectionScreen";
+import WordSearch from "./pages/WordSearch";
+import ScriptureReveal from "./pages/ScriptureReveal";
+import ScriptureSpinOff from "./pages/ScriptureSpinOff";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +43,9 @@ const App = () => (
             <Route path="/game/memory-match" element={<MemoryMatch />} />
             <Route path="/game/recall" element={<RecallMode />} />
             <Route path="/game/quick-tap" element={<QuickTap />} />
+            <Route path="/game/word-search" element={<WordSearch />} />
+            <Route path="/game/scripture-reveal" element={<ScriptureReveal />} />
+            <Route path="/game/scripture-spinoff" element={<ScriptureSpinOff />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
