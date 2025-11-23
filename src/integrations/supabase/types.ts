@@ -41,6 +41,51 @@ export type Database = {
         }
         Relationships: []
       }
+      daily_quests: {
+        Row: {
+          completed: boolean
+          completed_at: string | null
+          created_at: string
+          current_progress: number
+          id: string
+          quest_date: string
+          quest_description: string
+          quest_type: string
+          reward_coins: number
+          reward_xp: number
+          target_value: number
+          user_id: string
+        }
+        Insert: {
+          completed?: boolean
+          completed_at?: string | null
+          created_at?: string
+          current_progress?: number
+          id?: string
+          quest_date?: string
+          quest_description: string
+          quest_type: string
+          reward_coins?: number
+          reward_xp?: number
+          target_value: number
+          user_id: string
+        }
+        Update: {
+          completed?: boolean
+          completed_at?: string | null
+          created_at?: string
+          current_progress?: number
+          id?: string
+          quest_date?: string
+          quest_description?: string
+          quest_type?: string
+          reward_coins?: number
+          reward_xp?: number
+          target_value?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
       path_nodes: {
         Row: {
           character_appearance: string | null
@@ -260,6 +305,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      generate_daily_quests: { Args: { p_user_id: string }; Returns: undefined }
       update_verse_progress: {
         Args: {
           p_coins_earned?: number
