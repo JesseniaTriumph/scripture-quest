@@ -218,7 +218,13 @@ export default function ScriptureSpinOff() {
 
         <h1 className="text-2xl font-bold text-center">{verse.reference}</h1>
 
-        <CharacterGuide character={getCharacterForContext("master")} />
+        <CharacterGuide 
+          character={getCharacterForContext("master")} 
+          message={completed 
+            ? "Outstanding! You solved it! Your XP treasure is yours! 💎" 
+            : "Spin the wheel to reveal letters and solve the verse! Buy vowels for 50 XP or guess consonants!"
+          }
+        />
 
         <Card className="p-6">
           <div className="space-y-6">
