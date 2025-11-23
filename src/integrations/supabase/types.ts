@@ -41,11 +41,66 @@ export type Database = {
         }
         Relationships: []
       }
+      path_nodes: {
+        Row: {
+          character_appearance: string | null
+          collection_id: string | null
+          created_at: string | null
+          description: string | null
+          id: string
+          node_type: string
+          position: number
+          title: string | null
+          unlock_requirements: Json | null
+          verse_id: string | null
+        }
+        Insert: {
+          character_appearance?: string | null
+          collection_id?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          node_type: string
+          position: number
+          title?: string | null
+          unlock_requirements?: Json | null
+          verse_id?: string | null
+        }
+        Update: {
+          character_appearance?: string | null
+          collection_id?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          node_type?: string
+          position?: number
+          title?: string | null
+          unlock_requirements?: Json | null
+          verse_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "path_nodes_collection_id_fkey"
+            columns: ["collection_id"]
+            isOneToOne: false
+            referencedRelation: "collections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "path_nodes_verse_id_fkey"
+            columns: ["verse_id"]
+            isOneToOne: false
+            referencedRelation: "verses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_config: Json | null
           coins: number
           created_at: string
+          current_path_position: number | null
           display_name: string | null
           goal_type: string | null
           hearts: number
@@ -54,6 +109,7 @@ export type Database = {
           is_premium: boolean
           last_active_date: string | null
           level: number
+          path_completed_nodes: string[] | null
           reminder_time: string | null
           streak_count: number
           updated_at: string
@@ -64,6 +120,7 @@ export type Database = {
           avatar_config?: Json | null
           coins?: number
           created_at?: string
+          current_path_position?: number | null
           display_name?: string | null
           goal_type?: string | null
           hearts?: number
@@ -72,6 +129,7 @@ export type Database = {
           is_premium?: boolean
           last_active_date?: string | null
           level?: number
+          path_completed_nodes?: string[] | null
           reminder_time?: string | null
           streak_count?: number
           updated_at?: string
@@ -82,6 +140,7 @@ export type Database = {
           avatar_config?: Json | null
           coins?: number
           created_at?: string
+          current_path_position?: number | null
           display_name?: string | null
           goal_type?: string | null
           hearts?: number
@@ -90,6 +149,7 @@ export type Database = {
           is_premium?: boolean
           last_active_date?: string | null
           level?: number
+          path_completed_nodes?: string[] | null
           reminder_time?: string | null
           streak_count?: number
           updated_at?: string
