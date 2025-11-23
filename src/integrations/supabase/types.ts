@@ -103,11 +103,15 @@ export type Database = {
           current_path_position: number | null
           display_name: string | null
           goal_type: string | null
+          grace_pass_auto_use: boolean | null
+          grace_pass_refill_day: string | null
+          grace_passes_remaining: number | null
           hearts: number
           hearts_updated_at: string
           id: string
           is_premium: boolean
           last_active_date: string | null
+          last_grace_pass_used_at: string | null
           level: number
           path_completed_nodes: string[] | null
           reminder_time: string | null
@@ -123,11 +127,15 @@ export type Database = {
           current_path_position?: number | null
           display_name?: string | null
           goal_type?: string | null
+          grace_pass_auto_use?: boolean | null
+          grace_pass_refill_day?: string | null
+          grace_passes_remaining?: number | null
           hearts?: number
           hearts_updated_at?: string
           id: string
           is_premium?: boolean
           last_active_date?: string | null
+          last_grace_pass_used_at?: string | null
           level?: number
           path_completed_nodes?: string[] | null
           reminder_time?: string | null
@@ -143,11 +151,15 @@ export type Database = {
           current_path_position?: number | null
           display_name?: string | null
           goal_type?: string | null
+          grace_pass_auto_use?: boolean | null
+          grace_pass_refill_day?: string | null
+          grace_passes_remaining?: number | null
           hearts?: number
           hearts_updated_at?: string
           id?: string
           is_premium?: boolean
           last_active_date?: string | null
+          last_grace_pass_used_at?: string | null
           level?: number
           path_completed_nodes?: string[] | null
           reminder_time?: string | null
