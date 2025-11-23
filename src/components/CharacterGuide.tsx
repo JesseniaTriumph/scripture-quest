@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Character, getCharacterQuote } from "@/types/characters";
 import { Card } from "@/components/ui/card";
 
@@ -16,25 +16,46 @@ export const CharacterGuide = ({
   animated = true 
 }: CharacterGuideProps) => {
   const [displayedMessage, setDisplayedMessage] = useState("");
-  const finalMessage = message || getCharacterQuote(character);
+  const [isAnimating, setIsAnimating] = useState(false);
+  
+  // Memoize the quote to prevent it from changing on every render
+  // WHY: getCharacterQuote returns random quote, causing constant re-animations
+  const characterQuote = useMemo(() => getCharacterQuote(character), [character.name]);
+  const finalMessage = message || characterQuote;
 
   useEffect(() => {
+    // Reset and start animation only when message changes
     if (!animated) {
       setDisplayedMessage(finalMessage);
+      setIsAnimating(false);
       return;
     }
 
+    // Start fresh animation
+    setDisplayedMessage("");
+    setIsAnimating(true);
     let currentIndex = 0;
+    let cancelled = false;
+
     const interval = setInterval(() => {
-      if (currentIndex <= finalMessage.length) {
-        setDisplayedMessage(finalMessage.slice(0, currentIndex));
+      if (cancelled) {
+        clearInterval(interval);
+        return;
+      }
+
+      if (currentIndex < finalMessage.length) {
+        setDisplayedMessage(finalMessage.slice(0, currentIndex + 1));
         currentIndex++;
       } else {
+        setIsAnimating(false);
         clearInterval(interval);
       }
     }, 30);
 
-    return () => clearInterval(interval);
+    return () => {
+      cancelled = true;
+      clearInterval(interval);
+    };
   }, [finalMessage, animated]);
 
   const positionClasses = {
@@ -70,7 +91,7 @@ export const CharacterGuide = ({
           <div className="bg-muted/50 p-3 rounded-lg">
             <p className="text-sm leading-relaxed">
               {displayedMessage}
-              {animated && displayedMessage.length < finalMessage.length && (
+              {animated && isAnimating && (
                 <span className="animate-pulse">|</span>
               )}
             </p>
