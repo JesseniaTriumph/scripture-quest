@@ -9,6 +9,7 @@ import { HeartsDisplay } from "@/components/HeartsDisplay";
 import { GracePassIndicator } from "@/components/GracePassIndicator";
 import { GracePassModal } from "@/components/GracePassModal";
 import { UserStats } from "@/components/UserStats";
+import { DailyQuestsPanel } from "@/components/DailyQuestsPanel";
 import { useAuth } from "@/hooks/useAuth";
 import { useGracePass } from "@/hooks/useGracePass";
 import { Button } from "@/components/ui/button";
@@ -123,7 +124,16 @@ const Index = () => {
       <PathView />
       <Features />
       <GamesHub />
-      <ProfileDashboard />
+      <div className="max-w-7xl mx-auto px-4 pb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <ProfileDashboard />
+          </div>
+          <div>
+            <DailyQuestsPanel userId={user?.id} />
+          </div>
+        </div>
+      </div>
       <CallToAction />
     </div>
   );
