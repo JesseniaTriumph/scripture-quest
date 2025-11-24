@@ -8,36 +8,50 @@
 
 ## About Scripture Quest
 
-Scripture Quest is a mobile-first web application designed to help users memorize Bible verses through interactive mini-games, daily streaks, badges, and a supportive community. Inspired by successful learning platforms, Scripture Quest combines proven gamification mechanics with grace-based pedagogy to make Scripture memory accessible, enjoyable, and sustainable.
+Scripture Quest is a mobile-first web application designed to help users memorize Bible verses through interactive mini-games, daily streaks, badges, and a supportive community. Inspired by successful learning platforms like Duolingo, Scripture Quest combines proven gamification mechanics with grace-based pedagogy to make Scripture memory accessible, enjoyable, and sustainable.
 
 ### Key Features
 
-- 🎮 **8 Interactive Mini-Games**: Fill-in-the-blank, word scramble, word search, hangman, quick tap, typing drill, memory match, and daily "Lordle"
-- 🔥 **Daily Streaks & Habits**: Build consistency with streak tracking and daily goals
+- 🎮 **8 Interactive Mini-Games**: Preview, Copy, Fill-in-the-blank, Word Scramble, Verse Builder, Memory Match, Recall, and Quick Tap
+- 🔥 **Flame Streak System**: Visual streak tracking protected by Grace Pass with Ember as your streak guardian
 - 🏆 **XP, Levels & Badges**: Earn rewards for progress and achievements
 - 💎 **Hearts & Coins**: Game economy with lives and in-app currency
-- 👥 **Social Features**: Friends, church groups, leaderboards, and challenges
+- 🎁 **Grace Gifts**: Random surprise rewards (Double XP, Hint Passes, Coin Boosts, Heart Refills)
+- 🧠 **Adaptive Learning Engine**: Spaced repetition system that adapts to your retention patterns
+- 👥 **Social Features**: Friends, church groups, leaderboards, and Group Blessings (coming soon)
 - 🎯 **Curated Scripture Paths**: Topical collections like Foundations, Comfort, Identity, Prayer
 - 📱 **Mobile-First Design**: Responsive, beautiful, and accessible
-- 🌟 **8 Character Guides**: Diverse cast of symbolic and human guides to encourage your journey
+- 🌟 **10 Character Companions**: Choose your spiritual buddy to guide your journey
 
 ### Character System
 
-Scripture Quest features 8 unique characters:
+Scripture Quest features 10 unique character companions that guide and encourage you:
 
-**Symbolic Characters:**
-- **Hope** - The Guiding Light (primary mascot)
-- **Marcus** - The Scribe of Wisdom
-- **Selah** - The Rest & Reflection Spirit
+1. **Hope** 🕊️ - The Guiding Light (primary mascot)
+2. **Ember** 🔥 - Flame/Streak Guardian
+3. **Grace** 🌸 - Compassion & Forgiveness
+4. **Theo** 📖 - (In Development)
+5. **Victory** 👑 - Achievement & Celebration
+6. **Sophie** 🌟 - (In Development)
+7. **Evan** 💪 - (In Development)
+8. **Mia** 🎨 - (In Development)
+9. **Hezekiah** 🦁 - (In Development)
+10. **Joy** 😊 - Pure Happiness & Celebration
 
-**Human Guides:**
-- **Phoebe** - The Motivator
-- **Kai** - The Disciplinarian
-- **Zola** - The Encourager
-- **Rhys** - The Challenger
-- **Juno** - The Guide
+You select your companion during onboarding, and they appear throughout your journey to celebrate wins, comfort losses, and encourage you forward.
 
 See [CHARACTER_SYSTEM.md](./CHARACTER_SYSTEM.md) for full character details.
+
+### KJV Architecture
+
+Scripture Quest uses an **offline-first architecture** for King James Version (KJV) text:
+- 66 static JSON files (one per book) stored in `/public/kjv_books/`
+- SQLite database for verse metadata (references, difficulty, XP rewards)
+- Total size: ~4.5MB gzipped
+- **100% offline capability** - no remote API calls required
+- ESV available for exactly 500 whitelisted verses (copyright compliance)
+
+This design minimizes infrastructure costs and ensures Scripture is always accessible, even without internet connection.
 
 ## How can I edit this code?
 
@@ -93,7 +107,9 @@ This project is built with:
 - TypeScript
 - React
 - shadcn-ui
+- Tailwind CSS
 - Lovable Cloud (Supabase backend)
+- Lottie (for character animations - Phase 7)
 
 ## How can I deploy this project?
 
@@ -101,7 +117,9 @@ Simply open [Lovable](https://lovable.dev/projects/eca16520-cebd-43fb-b966-40cb7
 
 ## Roadmap
 
-See [ROADMAP.md](./ROADMAP.md) for the full phased implementation plan.
+See [ROADMAP.md](./ROADMAP.md) for the complete 7-phase implementation plan (14 weeks total).
+
+**Current Status:** Phase 0 in progress (Foundation Fixes)
 
 ## Can I connect a custom domain to my Scripture Quest project?
 
