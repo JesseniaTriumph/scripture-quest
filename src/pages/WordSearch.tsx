@@ -259,8 +259,6 @@ export default function WordSearch() {
           <HeartsDisplay />
         </div>
 
-        <h1 className="text-2xl font-bold text-center">{verse.reference}</h1>
-
         <CharacterGuide 
           character={getCharacterForContext("learn")} 
           message={completed 
@@ -271,8 +269,12 @@ export default function WordSearch() {
 
         <Card className="p-6">
           <div className="space-y-4">
-            <div className="text-center">
-              <p className="text-sm text-muted-foreground mb-2">Find these words:</p>
+            <div className="text-center space-y-3">
+              <div>
+                <p className="text-base mb-2 leading-relaxed">{verse.text}</p>
+                <p className="text-sm font-semibold text-primary">{verse.reference}</p>
+              </div>
+              <p className="text-sm text-muted-foreground">Find these words:</p>
               <div className="flex flex-wrap gap-2 justify-center">
                 {targetWords.map((word, idx) => (
                   <span
@@ -293,7 +295,6 @@ export default function WordSearch() {
               <div
                 className="inline-grid gap-1"
                 style={{ gridTemplateColumns: `repeat(12, minmax(0, 1fr))` }}
-                onMouseLeave={handleMouseUp}
               >
                 {grid.map((row, rowIdx) =>
                   row.map((cell, colIdx) => (
