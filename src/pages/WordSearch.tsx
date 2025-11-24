@@ -17,6 +17,7 @@ interface Verse {
   reference: string;
   text: string;
   xp_reward: number;
+  difficulty: string;
 }
 
 type Cell = {
@@ -42,6 +43,9 @@ export default function WordSearch() {
   const [selectedCells, setSelectedCells] = useState<Cell[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [completed, setCompleted] = useState(false);
+  const [hintsUsed, setHintsUsed] = useState(0);
+  const [gameStartTime, setGameStartTime] = useState<number>(Date.now());
+  const [showHint, setShowHint] = useState(false);
 
   useEffect(() => {
     if (!verseId || !user) {
@@ -64,6 +68,7 @@ export default function WordSearch() {
 
       setVerse(data);
       generateWordSearch(data.text);
+      setGameStartTime(Date.now());
       setLoading(false);
     };
 
@@ -190,12 +195,62 @@ export default function WordSearch() {
       setFoundWords(newFoundWords);
       toast.success(`Found: ${targetWords[wordIndex]}`);
 
+      // Hard mode: reshuffle after each found word
+      if (verse?.difficulty === 'hard' && verse.text) {
+        generateWordSearch(verse.text);
+      }
+
       if (newFoundWords.size === targetWords.length) {
         handleComplete();
       }
     }
 
     setSelectedCells([]);
+  };
+
+  const handleMouseLeave = () => {
+    // Medium mode: clear selection when mouse leaves
+    if (verse?.difficulty === 'medium') {
+      handleMouseUp();
+    }
+  };
+
+  const getHintTimeThreshold = () => {
+    if (!verse) return 45000;
+    switch (verse.difficulty) {
+      case 'easy': return 45000; // 45 seconds
+      case 'medium': return 60000; // 60 seconds
+      case 'hard': return 90000; // 90 seconds
+      default: return 45000;
+    }
+  };
+
+  const handleHint = () => {
+    if (hintsUsed >= 3) {
+      toast.error("No hints remaining! Purchase more hint packs to continue.");
+      return;
+    }
+
+    const unFoundWordIndices = targetWords
+      .map((_, idx) => idx)
+      .filter(idx => !foundWords.has(idx));
+    
+    if (unFoundWordIndices.length === 0) return;
+
+    const randomWordIndex = unFoundWordIndices[Math.floor(Math.random() * unFoundWordIndices.length)];
+    const hintWord = targetWords[randomWordIndex];
+    
+    setHintsUsed(hintsUsed + 1);
+    setShowHint(true);
+    toast.info(`Hint: Look for "${hintWord.toUpperCase()}"`, { duration: 3000 });
+    
+    setTimeout(() => setShowHint(false), 3000);
+  };
+
+  // Check if hint should be available
+  const isHintAvailable = () => {
+    const elapsed = Date.now() - gameStartTime;
+    return elapsed >= getHintTimeThreshold() && hintsUsed < 3;
   };
 
   const handleComplete = async () => {
@@ -295,6 +350,7 @@ export default function WordSearch() {
               <div
                 className="inline-grid gap-1"
                 style={{ gridTemplateColumns: `repeat(12, minmax(0, 1fr))` }}
+                onMouseLeave={handleMouseLeave}
               >
                 {grid.map((row, rowIdx) =>
                   row.map((cell, colIdx) => (
@@ -317,6 +373,22 @@ export default function WordSearch() {
                 )}
               </div>
             </div>
+
+            {!completed && (
+              <div className="flex items-center justify-between pt-2 border-t">
+                <div className="text-sm text-muted-foreground">
+                  Hints: {hintsUsed}/3 used
+                </div>
+                <Button
+                  onClick={handleHint}
+                  disabled={!isHintAvailable()}
+                  variant="outline"
+                  size="sm"
+                >
+                  {hintsUsed >= 3 ? "Buy More Hints" : isHintAvailable() ? "Use Hint" : "Hint Locked"}
+                </Button>
+              </div>
+            )}
 
             {completed && (
               <div className="text-center space-y-4 pt-4 border-t">
