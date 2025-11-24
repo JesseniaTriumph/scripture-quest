@@ -324,7 +324,36 @@ ALTER TABLE profiles ADD COLUMN weekend_amulet_active BOOLEAN DEFAULT false;
 
 **Update all 8 game pages** to use these utilities
 
-### 3.3 Game Selection Flow Polish (1 day)
+### 3.3 Difficulty-Based Game Modes (2 days)
+
+**Update Word Search and other applicable games with difficulty modes:**
+
+**Difficulty Tiers:**
+- 🟢 **Easy Mode**: 
+  - No auto-reshuffle
+  - Hints available after 45 seconds
+  - More generous XP multiplier (1.0×)
+  
+- 🟡 **Medium Mode**:
+  - Reshuffle when user leaves/returns to screen
+  - Hints available after 60 seconds
+  - Standard XP multiplier (1.2×)
+  
+- 🔴 **Hard Mode**:
+  - Reshuffle after each word found
+  - Hints available after 90 seconds
+  - Higher XP multiplier (1.5×)
+
+**Hint System Implementation:**
+- 3 max hints per game session
+- Hints reveal first letter position of unfound word
+- Timer-based unlock (45s/60s/90s based on difficulty)
+- Track hint usage in game state
+
+**Create:** `src/components/GameDifficultySelector.tsx`  
+**Create:** `src/hooks/useGameHints.tsx`
+
+### 3.4 Game Selection Flow Polish (1 day)
 
 **Update:** `src/components/GameSelectionScreen.tsx`
 
@@ -339,9 +368,9 @@ ALTER TABLE profiles ADD COLUMN weekend_amulet_active BOOLEAN DEFAULT false;
 - Show XP preview for each game
 - Character appears with stage tip
 
-**Deliverable:** All 8 games work perfectly, standardized reward system, polished UX
+**Deliverable:** All 8 games work perfectly with difficulty modes, hint system, standardized reward system, polished UX
 
-**Estimated Time:** 2 weeks
+**Estimated Time:** 2-3 weeks
 
 ---
 
