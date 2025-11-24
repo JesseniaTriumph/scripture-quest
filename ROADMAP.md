@@ -437,6 +437,46 @@ CREATE TABLE user_items (
 
 **Update all game pages** to check for active boosts
 
+### 5.1.5 Hint Pack Purchase System (3 days) 🆕
+
+**Status:** PLANNED - Monetization feature for game hints
+
+**Features:**
+- In-game hint packs available for purchase with coins
+- Each game allows 3 free hints per session
+- Hint availability timer based on difficulty:
+  - Easy mode: 45 seconds
+  - Medium mode: 60 seconds
+  - Hard mode: 90 seconds
+- Purchase options when hints depleted:
+  - 5 Hints Pack: 50 coins
+  - 15 Hints Pack: 120 coins (20% discount)
+  - 50 Hints Pack: 300 coins (40% discount)
+
+**Database:**
+```sql
+ALTER TABLE user_items 
+ADD COLUMN hint_pack_size INT DEFAULT 0;
+
+-- Track hint usage per game session
+CREATE TABLE hint_usage_log (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES profiles(user_id),
+  verse_id UUID REFERENCES verses(id),
+  game_type TEXT NOT NULL,
+  hints_used INT DEFAULT 0,
+  timestamp TIMESTAMPTZ DEFAULT NOW()
+);
+```
+
+**Create:** `src/components/HintPackModal.tsx`
+- Shows when user clicks "Buy More Hints" in Word Search
+- Display coin balance
+- Pack options with coin costs
+- Purchase confirmation
+
+**Deliverable:** Monetization path for power users who want extra help
+
 ### 5.2 Context Overlay System (1 week)
 
 **Create:** `src/components/ContextOverlay.tsx`
