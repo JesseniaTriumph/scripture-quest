@@ -32,6 +32,7 @@ export default function WordScramble() {
   const [availableWords, setAvailableWords] = useState<string[]>([]);
   const [isComplete, setIsComplete] = useState(false);
   const [attempts, setAttempts] = useState(0);
+  const [showPreview, setShowPreview] = useState(true);
 
   useEffect(() => {
     if (!verseId || !user) {
@@ -169,7 +170,21 @@ export default function WordScramble() {
           message="Unscramble the words carefully. Every piece matters."
         />
 
-        <Card className="p-8 mb-6">
+        {showPreview ? (
+          <Card className="p-8 text-center">
+            <h2 className="text-2xl font-bold mb-4 text-primary">{verse?.reference}</h2>
+            <p className="text-lg mb-6 leading-relaxed">{verse?.text}</p>
+            <p className="text-muted-foreground mb-6">Read and memorize this verse. When you're ready, click below to start the game.</p>
+            <Button
+              onClick={() => setShowPreview(false)}
+              className="gradient-primary text-white hover:opacity-90"
+              size="lg"
+            >
+              I'm Ready - Start Game
+            </Button>
+          </Card>
+        ) : (
+          <Card className="p-8 mb-6">
           <div className="text-center mb-6">
             <h2 className="text-2xl font-bold text-primary mb-2">{verse?.reference}</h2>
             <p className="text-sm text-muted-foreground">Tap words to build the verse</p>
@@ -254,6 +269,7 @@ export default function WordScramble() {
             </p>
           )}
         </Card>
+        )}
       </div>
     </div>
   );

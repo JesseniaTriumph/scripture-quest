@@ -215,5 +215,4 @@ export const PathView = () => {
   );
 };
 
-// Missing import for CheckCircle
 import { CheckCircle } from "lucide-react";
