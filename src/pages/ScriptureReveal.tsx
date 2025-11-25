@@ -237,7 +237,7 @@ export default function ScriptureReveal() {
                   Word revealed! 🎉
                 </p>
                 <p className="text-muted-foreground">The word was: <span className="font-bold">{hiddenWord}</span></p>
-                <Button onClick={() => navigate(`/game-selection?verseId=${verseId}&verseRef=${verse.reference}`)}>
+                <Button onClick={() => navigate(`/game-select?verseId=${verseId}&verseRef=${verse.reference}`)}>
                   Continue
                 </Button>
               </div>
@@ -249,7 +249,7 @@ export default function ScriptureReveal() {
                   All revelation lights dimmed 💔
                 </p>
                 <p className="text-muted-foreground">The word was: <span className="font-bold">{hiddenWord}</span></p>
-                <Button onClick={() => navigate(`/game-selection?verseId=${verseId}&verseRef=${verse.reference}`)}>
+                <Button onClick={() => navigate(`/game-select?verseId=${verseId}&verseRef=${verse.reference}`)}>
                   Try Another Game
                 </Button>
               </div>

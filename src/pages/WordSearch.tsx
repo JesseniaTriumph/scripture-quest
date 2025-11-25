@@ -11,6 +11,7 @@ import confetti from "canvas-confetti";
 import { HeartsDisplay } from "@/components/HeartsDisplay";
 import { CharacterGuide } from "@/components/CharacterGuide";
 import { getCharacterForContext } from "@/types/characters";
+import { useSounds } from "@/hooks/useSounds";
 
 interface Verse {
   id: string;
@@ -33,6 +34,7 @@ export default function WordSearch() {
   const [searchParams] = useSearchParams();
   const verseId = searchParams.get("verseId");
   const { user } = useAuth();
+  const { playChime, playVictory } = useSounds();
   const { hearts, loseHeart, refreshHearts } = useHearts();
 
   const [verse, setVerse] = useState<Verse | null>(null);
@@ -193,6 +195,10 @@ export default function WordSearch() {
       const newFoundWords = new Set(foundWords);
       newFoundWords.add(wordIndex);
       setFoundWords(newFoundWords);
+      
+      // Play magical chime sound
+      playChime();
+      
       toast.success(`Found: ${targetWords[wordIndex]}`);
 
       // Hard mode: reshuffle after each found word
@@ -257,6 +263,10 @@ export default function WordSearch() {
     if (!verse || !user) return;
 
     setCompleted(true);
+    
+    // Play victory sound
+    playVictory();
+    
     confetti({
       particleCount: 100,
       spread: 70,
@@ -326,7 +336,26 @@ export default function WordSearch() {
           <div className="space-y-4">
             <div className="text-center space-y-3">
               <div>
-                <p className="text-base mb-2 leading-relaxed">{verse.text}</p>
+                <p className="text-base mb-2 leading-relaxed">
+                  {verse.text.split(' ').map((word, idx) => {
+                    const cleanWord = word.replace(/[^a-zA-Z]/g, '').toLowerCase();
+                    const isFound = targetWords.some((targetWord, targetIdx) => 
+                      targetWord === cleanWord && foundWords.has(targetIdx)
+                    );
+                    return (
+                      <span
+                        key={idx}
+                        className={`${
+                          isFound 
+                            ? 'text-success font-semibold' 
+                            : 'text-foreground'
+                        } transition-all duration-300`}
+                      >
+                        {word}{' '}
+                      </span>
+                    );
+                  })}
+                </p>
                 <p className="text-sm font-semibold text-primary">{verse.reference}</p>
               </div>
               <p className="text-sm text-muted-foreground">Find these words:</p>
@@ -395,7 +424,7 @@ export default function WordSearch() {
                 <p className="text-lg font-semibold text-green-600 dark:text-green-400">
                   All words found! 🎉
                 </p>
-                <Button onClick={() => navigate(`/game-selection?verseId=${verseId}&verseRef=${verse.reference}`)}>
+                <Button onClick={() => navigate(`/game-select?verseId=${verseId}&verseRef=${verse.reference}`)}>
                   Continue
                 </Button>
               </div>

@@ -310,7 +310,7 @@ export default function ScriptureSpinOff() {
                 <p className="text-lg font-semibold text-green-600 dark:text-green-400">
                   Phrase solved! 🎉
                 </p>
-                <Button onClick={() => navigate(`/game-selection?verseId=${verseId}&verseRef=${verse.reference}`)}>
+                <Button onClick={() => navigate(`/game-select?verseId=${verseId}&verseRef=${verse.reference}`)}>
                   Continue
                 </Button>
               </div>
