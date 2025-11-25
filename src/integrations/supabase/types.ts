@@ -86,6 +86,60 @@ export type Database = {
         }
         Relationships: []
       }
+      game_sessions: {
+        Row: {
+          accuracy: number
+          attempts: number
+          coins_earned: number | null
+          completed_at: string | null
+          completion_time: number
+          game_type: string
+          id: string
+          user_id: string
+          verse_id: string
+          xp_earned: number | null
+        }
+        Insert: {
+          accuracy: number
+          attempts?: number
+          coins_earned?: number | null
+          completed_at?: string | null
+          completion_time: number
+          game_type: string
+          id?: string
+          user_id: string
+          verse_id: string
+          xp_earned?: number | null
+        }
+        Update: {
+          accuracy?: number
+          attempts?: number
+          coins_earned?: number | null
+          completed_at?: string | null
+          completion_time?: number
+          game_type?: string
+          id?: string
+          user_id?: string
+          verse_id?: string
+          xp_earned?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_game_sessions_user_id"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "game_sessions_verse_id_fkey"
+            columns: ["verse_id"]
+            isOneToOne: false
+            referencedRelation: "verses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       path_nodes: {
         Row: {
           character_appearance: string | null
@@ -217,30 +271,51 @@ export type Database = {
       }
       verse_progress: {
         Row: {
+          avg_completion_time: number | null
           created_at: string
+          ease_factor: number | null
+          games_completed: string[] | null
           id: string
           last_played_at: string
+          last_review_interval: number | null
           mastery_level: number
+          next_review_date: string | null
+          stage: string | null
+          strength_score: number | null
           times_correct: number
           times_wrong: number
           user_id: string
           verse_id: string
         }
         Insert: {
+          avg_completion_time?: number | null
           created_at?: string
+          ease_factor?: number | null
+          games_completed?: string[] | null
           id?: string
           last_played_at?: string
+          last_review_interval?: number | null
           mastery_level?: number
+          next_review_date?: string | null
+          stage?: string | null
+          strength_score?: number | null
           times_correct?: number
           times_wrong?: number
           user_id: string
           verse_id: string
         }
         Update: {
+          avg_completion_time?: number | null
           created_at?: string
+          ease_factor?: number | null
+          games_completed?: string[] | null
           id?: string
           last_played_at?: string
+          last_review_interval?: number | null
           mastery_level?: number
+          next_review_date?: string | null
+          stage?: string | null
+          strength_score?: number | null
           times_correct?: number
           times_wrong?: number
           user_id?: string
