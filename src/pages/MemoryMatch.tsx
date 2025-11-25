@@ -41,6 +41,7 @@ export default function MemoryMatch() {
   const [matches, setMatches] = useState(0);
   const [attempts, setAttempts] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(true);
 
   useEffect(() => {
     if (!verseId || !user) {
@@ -149,8 +150,7 @@ export default function MemoryMatch() {
         }
       }, 500);
     } else {
-      // No match
-      await loseHeart();
+      // No match - don't lose heart for wrong attempts
       setTimeout(() => {
         const newCards = [...cards];
         newCards[index1].flipped = false;
@@ -229,7 +229,36 @@ export default function MemoryMatch() {
           character={CHARACTERS.marcus}
           message="Test your memory and connect the pieces. This challenges your mastery."
         />
-        {!isComplete && (
+        {showInstructions ? (
+          <Card className="p-8 text-center max-w-2xl mx-auto">
+            <h2 className="text-2xl font-bold mb-4">📖 How to Play Memory Match</h2>
+            <div className="text-left space-y-4 mb-6">
+              <p className="text-muted-foreground">
+                <strong className="text-foreground">Goal:</strong> Connect the verse reference with the scripture text <strong>in sequential order</strong>.
+              </p>
+              <p className="text-muted-foreground">
+                The verse has been split into 4 parts. Match each part number with its text:
+              </p>
+              <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4">
+                <li><strong className="text-primary">Part 1</strong> → First phrase of the verse</li>
+                <li><strong className="text-primary">Part 2</strong> → Second phrase</li>
+                <li><strong className="text-primary">Part 3</strong> → Third phrase</li>
+                <li><strong className="text-primary">Part 4</strong> → Final phrase</li>
+              </ul>
+              <p className="text-muted-foreground">
+                <strong className="text-foreground">Example:</strong> For John 3:16, you'd match:<br/>
+                <span className="text-sm italic">"{verse?.reference} (Part 1)" ↔ "For God so loved the world, that"</span>
+              </p>
+            </div>
+            <Button
+              onClick={() => setShowInstructions(false)}
+              className="w-full gradient-primary text-white hover:opacity-90"
+              size="lg"
+            >
+              Start Game
+            </Button>
+          </Card>
+        ) : !isComplete && (
           <div className="mb-6 text-center">
             <div className="flex justify-center gap-8 text-lg">
               <span className="text-muted-foreground">Matches: <span className="text-primary font-bold">{matches}/4</span></span>
@@ -238,7 +267,7 @@ export default function MemoryMatch() {
           </div>
         )}
 
-        {isComplete ? (
+        {showInstructions ? null : isComplete ? (
           <Card className="p-8 text-center">
             <div className="mb-6">
               <CheckCircle className="w-16 h-16 text-success mx-auto mb-4" />
