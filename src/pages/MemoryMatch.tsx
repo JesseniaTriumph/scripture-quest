@@ -153,6 +153,18 @@ export default function MemoryMatch() {
     if (card1.verseId === card2.verseId && card1.type !== card2.type) {
       // Match found! Advance to next segment
       playChime(); // Play chime sound on successful match
+      
+      // Particle burst effect for successful match
+      confetti({
+        particleCount: 30,
+        spread: 60,
+        origin: { y: 0.5 },
+        colors: ['#10b981', '#3b82f6', '#8b5cf6'],
+        startVelocity: 25,
+        gravity: 0.8,
+        ticks: 60
+      });
+      
       setTimeout(() => {
         const newCards = [...cards];
         newCards[index1].matched = true;
