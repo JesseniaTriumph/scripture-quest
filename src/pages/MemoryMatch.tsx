@@ -42,6 +42,7 @@ export default function MemoryMatch() {
   const [attempts, setAttempts] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
   const [showInstructions, setShowInstructions] = useState(true);
+  const [currentSegment, setCurrentSegment] = useState(0); // Track which segment pair to match next
 
   useEffect(() => {
     if (!verseId || !user) {
@@ -112,7 +113,20 @@ export default function MemoryMatch() {
   };
 
   const handleCardClick = (index: number) => {
-    if (selectedCards.length >= 2 || cards[index].flipped || cards[index].matched) {
+    const card = cards[index];
+    
+    // Prevent clicking if already matched, flipped, or not the current segment
+    if (selectedCards.length >= 2 || card.flipped || card.matched) {
+      return;
+    }
+    
+    // Only allow clicking cards from the current segment
+    if (card.verseId !== `segment-${currentSegment}`) {
+      toast({
+        title: "Match in Order",
+        description: `Please match Part ${currentSegment + 1} first`,
+        variant: "destructive",
+      });
       return;
     }
 
@@ -134,7 +148,7 @@ export default function MemoryMatch() {
     const card2 = cards[index2];
 
     if (card1.verseId === card2.verseId && card1.type !== card2.type) {
-      // Match found!
+      // Match found! Advance to next segment
       setTimeout(() => {
         const newCards = [...cards];
         newCards[index1].matched = true;
@@ -144,13 +158,19 @@ export default function MemoryMatch() {
         
         const newMatches = matches + 1;
         setMatches(newMatches);
+        setCurrentSegment(prev => prev + 1); // Move to next segment
 
         if (newMatches === 4) {
           completeGame();
+        } else {
+          toast({
+            title: "Perfect!",
+            description: `Now match Part ${newMatches + 1}`,
+          });
         }
       }, 500);
     } else {
-      // No match - don't lose heart for wrong attempts
+      // No match - cards are from same segment but wrong pairing
       setTimeout(() => {
         const newCards = [...cards];
         newCards[index1].flipped = false;
@@ -234,21 +254,23 @@ export default function MemoryMatch() {
             <h2 className="text-2xl font-bold mb-4">📖 How to Play Memory Match</h2>
             <div className="text-left space-y-4 mb-6">
               <p className="text-muted-foreground">
-                <strong className="text-foreground">Goal:</strong> Connect the verse reference with the scripture text <strong>in sequential order</strong>.
+                <strong className="text-foreground">Goal:</strong> Match verse segments with their references <strong>in sequential order</strong> from Part 1 to Part 4.
               </p>
               <p className="text-muted-foreground">
-                The verse has been split into 4 parts. Match each part number with its text:
+                The verse has been split into 4 sequential parts. You must match them in story order:
               </p>
               <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4">
-                <li><strong className="text-primary">Part 1</strong> → First phrase of the verse</li>
-                <li><strong className="text-primary">Part 2</strong> → Second phrase</li>
-                <li><strong className="text-primary">Part 3</strong> → Third phrase</li>
-                <li><strong className="text-primary">Part 4</strong> → Final phrase</li>
+                <li><strong className="text-primary">Start with Part 1</strong> → Match the opening phrase</li>
+                <li><strong className="text-primary">Then Part 2</strong> → Match the second phrase</li>
+                <li><strong className="text-primary">Then Part 3</strong> → Match the third phrase</li>
+                <li><strong className="text-primary">Finally Part 4</strong> → Match the closing phrase</li>
               </ul>
-              <p className="text-muted-foreground">
-                <strong className="text-foreground">Example:</strong> For John 3:16, you'd match:<br/>
-                <span className="text-sm italic">"{verse?.reference} (Part 1)" ↔ "For God so loved the world, that"</span>
-              </p>
+              <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 mt-4">
+                <p className="text-sm text-foreground font-medium mb-2">📖 How It Works:</p>
+                <p className="text-sm text-muted-foreground">
+                  You can only flip cards from the current part. Match the reference card with its text card to unlock the next part. This helps you learn the verse in story order!
+                </p>
+              </div>
             </div>
             <Button
               onClick={() => setShowInstructions(false)}
@@ -264,6 +286,17 @@ export default function MemoryMatch() {
               <span className="text-muted-foreground">Matches: <span className="text-primary font-bold">{matches}/4</span></span>
               <span className="text-muted-foreground">Attempts: <span className="font-bold">{attempts}</span></span>
             </div>
+          </div>
+        )}
+
+        {showInstructions ? null : (
+          <div className="mb-6 bg-primary/10 border border-primary/20 rounded-lg p-4 text-center">
+            <p className="text-sm text-muted-foreground">
+              <strong className="text-primary">Current Task:</strong> Match <strong className="text-foreground">Part {currentSegment + 1}</strong> cards
+            </p>
+            <p className="text-xs text-muted-foreground mt-1">
+              (Other cards are locked until you complete this part)
+            </p>
           </div>
         )}
 
@@ -290,12 +323,14 @@ export default function MemoryMatch() {
               <Card
                 key={card.id}
                 onClick={() => handleCardClick(index)}
-                className={`aspect-square cursor-pointer transition-all duration-300 ${
+                className={`aspect-square transition-all duration-300 ${
                   card.matched 
-                    ? "bg-success/10 border-success" 
+                    ? "bg-success/10 border-success cursor-default" 
                     : card.flipped 
-                    ? "bg-primary/10 border-primary" 
-                    : "hover:bg-muted"
+                    ? "bg-primary/10 border-primary cursor-pointer" 
+                    : card.verseId === `segment-${currentSegment}`
+                    ? "hover:bg-muted cursor-pointer border-2 border-primary/40"
+                    : "opacity-40 cursor-not-allowed border border-muted"
                 }`}
               >
                 <div className="h-full flex items-center justify-center p-4">
