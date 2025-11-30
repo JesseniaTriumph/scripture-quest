@@ -44,6 +44,7 @@ export default function MemoryMatch() {
   const [attempts, setAttempts] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
   const [showInstructions, setShowInstructions] = useState(true);
+  const [showPreview, setShowPreview] = useState(false);
   const [currentSegment, setCurrentSegment] = useState(0); // Track which segment pair to match next
 
   useEffect(() => {
@@ -277,83 +278,99 @@ export default function MemoryMatch() {
               </div>
             </div>
             <Button
-              onClick={() => setShowInstructions(false)}
-              className="w-full gradient-primary text-white hover:opacity-90"
-              size="lg"
-            >
-              Start Game
-            </Button>
-          </Card>
-        ) : !isComplete && (
-          <div className="mb-6 text-center">
-            <div className="flex justify-center gap-8 text-lg">
-              <span className="text-muted-foreground">Matches: <span className="text-primary font-bold">{matches}/4</span></span>
-              <span className="text-muted-foreground">Attempts: <span className="font-bold">{attempts}</span></span>
-            </div>
-          </div>
-        )}
-
-        {showInstructions ? null : (
-          <div className="mb-6 bg-primary/10 border border-primary/20 rounded-lg p-4 text-center">
-            <p className="text-sm text-muted-foreground">
-              <strong className="text-primary">Current Task:</strong> Match <strong className="text-foreground">Part {currentSegment + 1}</strong> cards
-            </p>
-            <p className="text-xs text-muted-foreground mt-1">
-              (Other cards are locked until you complete this part)
-            </p>
-          </div>
-        )}
-
-        {showInstructions ? null : isComplete ? (
-          <Card className="p-8 text-center">
-            <div className="mb-6">
-              <CheckCircle className="w-16 h-16 text-success mx-auto mb-4" />
-              <h2 className="text-3xl font-bold mb-2">Perfect Match!</h2>
-              <p className="text-lg text-muted-foreground">
-                You completed the game in {attempts} attempts
-              </p>
-            </div>
-            <Button
-              onClick={handleComplete}
+              onClick={() => {
+                setShowInstructions(false);
+                setShowPreview(true);
+              }}
               className="w-full gradient-primary text-white hover:opacity-90"
               size="lg"
             >
               Continue
             </Button>
           </Card>
+        ) : showPreview ? (
+          <Card className="p-8 text-center">
+            <h2 className="text-2xl font-bold mb-4 text-primary">{verse?.reference}</h2>
+            <p className="text-lg mb-6 leading-relaxed">{verse?.text}</p>
+            <p className="text-muted-foreground mb-6">Read and memorize this verse. When you're ready, click below to start matching the sequential parts.</p>
+            <Button
+              onClick={() => setShowPreview(false)}
+              className="gradient-primary text-white hover:opacity-90"
+              size="lg"
+            >
+              I'm Ready - Start Game
+            </Button>
+          </Card>
         ) : (
-          <div className="grid grid-cols-4 gap-4">
-            {cards.map((card, index) => (
-              <Card
-                key={card.id}
-                onClick={() => handleCardClick(index)}
-                className={`aspect-square transition-all duration-300 ${
-                  card.matched 
-                    ? "bg-success/10 border-success cursor-default" 
-                    : card.flipped 
-                    ? "bg-primary/10 border-primary cursor-pointer" 
-                    : card.verseId === `segment-${currentSegment}`
-                    ? "hover:bg-muted cursor-pointer border-2 border-primary/40"
-                    : "opacity-40 cursor-not-allowed border border-muted"
-                }`}
-              >
-                <div className="h-full flex items-center justify-center p-4">
-                  {card.flipped || card.matched ? (
-                    <div className="text-center">
-                      <p className={`text-xs font-semibold mb-2 ${
-                        card.type === "reference" ? "text-primary" : "text-foreground"
-                      }`}>
-                        {card.type === "reference" ? "📖 Reference" : "📝 Text"}
-                      </p>
-                      <p className="text-sm font-medium">{card.content}</p>
-                    </div>
-                  ) : (
-                    <div className="text-4xl">❓</div>
-                  )}
+          <>
+            <div className="mb-6 text-center">
+              <div className="flex justify-center gap-8 text-lg">
+                <span className="text-muted-foreground">Matches: <span className="text-primary font-bold">{matches}/4</span></span>
+                <span className="text-muted-foreground">Attempts: <span className="font-bold">{attempts}</span></span>
+              </div>
+            </div>
+
+            <div className="mb-6 bg-primary/10 border border-primary/20 rounded-lg p-4 text-center">
+              <p className="text-sm text-muted-foreground">
+                <strong className="text-primary">Current Task:</strong> Match <strong className="text-foreground">Part {currentSegment + 1}</strong> cards
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">
+                (Other cards are locked until you complete this part)
+              </p>
+            </div>
+
+            {isComplete ? (
+              <Card className="p-8 text-center">
+                <div className="mb-6">
+                  <CheckCircle className="w-16 h-16 text-success mx-auto mb-4" />
+                  <h2 className="text-3xl font-bold mb-2">Perfect Match!</h2>
+                  <p className="text-lg text-muted-foreground">
+                    You completed the game in {attempts} attempts
+                  </p>
                 </div>
+                <Button
+                  onClick={handleComplete}
+                  className="w-full gradient-primary text-white hover:opacity-90"
+                  size="lg"
+                >
+                  Continue
+                </Button>
               </Card>
-            ))}
-          </div>
+            ) : (
+              <div className="grid grid-cols-4 gap-4">
+                {cards.map((card, index) => (
+                  <Card
+                    key={card.id}
+                    onClick={() => handleCardClick(index)}
+                    className={`aspect-square transition-all duration-300 ${
+                      card.matched 
+                        ? "bg-success/10 border-success cursor-default" 
+                        : card.flipped 
+                        ? "bg-primary/10 border-primary cursor-pointer" 
+                        : card.verseId === `segment-${currentSegment}`
+                        ? "hover:bg-muted cursor-pointer border-2 border-primary/40"
+                        : "opacity-40 cursor-not-allowed border border-muted"
+                    }`}
+                  >
+                    <div className="h-full flex items-center justify-center p-4">
+                      {card.flipped || card.matched ? (
+                        <div className="text-center">
+                          <p className={`text-xs font-semibold mb-2 ${
+                            card.type === "reference" ? "text-primary" : "text-foreground"
+                          }`}>
+                            {card.type === "reference" ? "📖 Reference" : "📝 Text"}
+                          </p>
+                          <p className="text-sm font-medium">{card.content}</p>
+                        </div>
+                      ) : (
+                        <div className="text-4xl">❓</div>
+                      )}
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
