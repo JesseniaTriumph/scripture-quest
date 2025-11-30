@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from './useAuth';
+import { useSounds } from './useSounds';
 
 const MAX_OIL = 5;
 const REGEN_TIME_MS = 15 * 60 * 1000; // 15 minutes in milliseconds
@@ -13,6 +14,7 @@ interface Profile {
 
 export const useOilLamp = () => {
   const { user } = useAuth();
+  const { playBurn, playRefill } = useSounds();
   const [oil, setOil] = useState<number>(MAX_OIL);
   const [isPremium, setIsPremium] = useState(false);
   const [timeUntilRefill, setTimeUntilRefill] = useState<number>(0);
@@ -113,6 +115,7 @@ export const useOilLamp = () => {
       if (error) throw error;
 
       setOil(newOil);
+      playBurn(); // Play burn sound when oil is lost
       return true;
     } catch (error) {
       console.error('Error burning oil:', error);
@@ -137,6 +140,7 @@ export const useOilLamp = () => {
       if (error) throw error;
 
       setOil(newOil);
+      playRefill(); // Play refill sound when oil is restored
       return true;
     } catch (error) {
       console.error('Error refilling oil:', error);
