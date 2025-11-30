@@ -363,7 +363,7 @@ export default function MemoryMatch() {
                       shakingCard === index ? "animate-shake" : ""
                     } ${
                       card.verseId === `segment-${currentSegment}` && !card.matched
-                        ? "cursor-pointer"
+                        ? "cursor-pointer animate-glow-pulse"
                         : card.matched
                         ? "cursor-default"
                         : "cursor-not-allowed opacity-40"
