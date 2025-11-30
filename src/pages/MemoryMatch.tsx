@@ -217,7 +217,7 @@ export default function MemoryMatch() {
             </div>
             <div className="text-right">
               <p className="text-sm text-white/70">Lamp Oil</p>
-              <p className="text-2xl font-bold">{hearts}/5</p>
+              <p className="text-2xl font-bold">{oil}/5</p>
             </div>
           </div>
         </div>

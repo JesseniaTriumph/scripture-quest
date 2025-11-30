@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useOilLamp } from "@/hooks/useOilLamp";
 import { useSounds } from "@/hooks/useSounds";
+import { useToast } from "@/hooks/use-toast";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -33,8 +34,9 @@ export default function FillInTheBlank() {
   const verseId = searchParams.get("verseId");
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { burnOil } = useOilLamp();
+  const { oil, burnOil } = useOilLamp();
   const { playVictory } = useSounds();
+  const { toast } = useToast();
 
   const [verse, setVerse] = useState<Verse | null>(null);
   const [questions, setQuestions] = useState<BlankQuestion[]>([]);
@@ -136,18 +138,18 @@ export default function FillInTheBlank() {
       });
     } else {
       setWrongAnswers(wrongAnswers + 1);
-      const heartLost = await loseHeart();
+      const oilLost = await burnOil();
       
-      if (heartLost) {
+      if (oilLost) {
         toast({
-          title: "Incorrect 💔",
-          description: `Lost a heart! Correct answer: ${currentQuestion.correctAnswer}`,
+          title: "Incorrect 🪔",
+          description: `Lost lamp oil! Correct answer: ${currentQuestion.correctAnswer}`,
           variant: "destructive",
         });
       }
 
       // Check if out of lamp oil
-      if (hearts <= 1) {
+      if (oil <= 1) {
         toast({
           title: "Out of Lamp Oil!",
           description: "Wait for lamp oil to refill or upgrade to Premium",
@@ -192,9 +194,6 @@ export default function FillInTheBlank() {
       });
 
       if (error) throw error;
-
-      // Refresh hearts to update the display
-      await refreshHearts();
 
       // Show confetti for good performance
       if (accuracy >= 0.7) {
@@ -346,7 +345,7 @@ export default function FillInTheBlank() {
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <Heart className="h-5 w-5 text-destructive fill-destructive" />
-              <span className="font-bold">{hearts}</span>
+              <span className="font-bold">{oil}</span>
             </div>
             <Badge variant="outline">
               Question {currentQuestionIndex + 1}/{questions.length}

@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useOilLamp } from "@/hooks/useOilLamp";
 import { useSounds } from "@/hooks/useSounds";
+import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, RotateCcw, CheckCircle } from "lucide-react";
 import confetti from "canvas-confetti";
 import { CharacterGuide } from "@/components/CharacterGuide";
@@ -23,8 +24,8 @@ export default function WordScramble() {
   const verseId = searchParams.get("verseId");
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { oil, burnOil } = useOilLamp();
   const { toast } = useToast();
-  const { burnOil } = useOilLamp();
   const { playVictory } = useSounds();
   const [verse, setVerse] = useState<Verse | null>(null);
   const [loading, setLoading] = useState(true);
@@ -117,7 +118,7 @@ export default function WordScramble() {
         });
       }
     } else {
-      await loseHeart();
+      await burnOil();
       toast({
         title: "Not quite right",
         description: "Try again! The words need to be in the exact order.",
@@ -158,7 +159,7 @@ export default function WordScramble() {
             </div>
             <div className="text-right">
               <p className="text-sm text-white/70">Lamp Oil</p>
-              <p className="text-2xl font-bold">{hearts}/5</p>
+              <p className="text-2xl font-bold">{oil}/5</p>
             </div>
           </div>
         </div>
@@ -255,7 +256,7 @@ export default function WordScramble() {
               </Button>
               <Button
                 onClick={handleCheck}
-                disabled={selectedWords.length !== scrambledWords.length || hearts === 0}
+                disabled={selectedWords.length !== scrambledWords.length || oil === 0}
                 className="flex-1 gradient-primary text-white hover:opacity-90"
                 size="lg"
               >

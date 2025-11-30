@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useOilLamp } from "@/hooks/useOilLamp";
 import { useSounds } from "@/hooks/useSounds";
+import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, CheckCircle, X } from "lucide-react";
 import confetti from "canvas-confetti";
 import { CharacterGuide } from "@/components/CharacterGuide";
@@ -31,8 +32,8 @@ export default function QuickTap() {
   const verseId = searchParams.get("verseId");
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { oil, burnOil } = useOilLamp();
   const { toast } = useToast();
-  const { burnOil } = useOilLamp();
   const { playVictory } = useSounds();
   const [verse, setVerse] = useState<Verse | null>(null);
   const [loading, setLoading] = useState(true);
@@ -133,7 +134,7 @@ export default function QuickTap() {
     if (isCorrect) {
       setScore(score + 1);
     } else {
-      await loseHeart();
+      await burnOil();
     }
 
     setTimeout(() => {
@@ -249,7 +250,7 @@ export default function QuickTap() {
             </div>
             <div className="text-right">
               <p className="text-sm text-white/70">Lamp Oil</p>
-              <p className="text-2xl font-bold">{hearts}/5</p>
+              <p className="text-2xl font-bold">{oil}/5</p>
             </div>
           </div>
         </div>
