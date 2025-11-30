@@ -13,7 +13,7 @@
  * a day (internal testing data).
  * 
  * @dependencies useGracePass hook, Tooltip component
- * @relatedFiles useGracePass.tsx, GracePassModal.tsx, HeartsDisplay.tsx
+ * @relatedFiles useGracePass.tsx, GracePassModal.tsx, OilLampDisplay.tsx
  */
 
 import { useGracePass } from "@/hooks/useGracePass";
@@ -47,7 +47,7 @@ import { Card } from "@/components/ui/card";
  * 
  * @example
  * <div className="flex gap-4">
- *   <HeartsDisplay />
+ *   <OilLampDisplay />
  *   <GracePassIndicator />
  * </div>
  */

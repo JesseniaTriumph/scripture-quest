@@ -5,13 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowLeft } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
-import { useHearts } from "@/hooks/useHearts";
+import { useOilLamp } from "@/hooks/useOilLamp";
+import { useSounds } from "@/hooks/useSounds";
 import { toast } from "sonner";
 import confetti from "canvas-confetti";
-import { HeartsDisplay } from "@/components/HeartsDisplay";
+import { OilLampDisplay } from "@/components/OilLampDisplay";
 import { CharacterGuide } from "@/components/CharacterGuide";
 import { getCharacterForContext } from "@/types/characters";
-import { useSounds } from "@/hooks/useSounds";
 
 interface Verse {
   id: string;
@@ -35,7 +35,7 @@ export default function WordSearch() {
   const verseId = searchParams.get("verseId");
   const { user } = useAuth();
   const { playChime, playVictory } = useSounds();
-  const { hearts, loseHeart, refreshHearts } = useHearts();
+  const { oil, burnOil, refreshOil } = useOilLamp();
 
   const [verse, setVerse] = useState<Verse | null>(null);
   const [loading, setLoading] = useState(true);
@@ -321,7 +321,7 @@ export default function WordSearch() {
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back
           </Button>
-          <HeartsDisplay />
+          <OilLampDisplay />
         </div>
 
         <CharacterGuide 

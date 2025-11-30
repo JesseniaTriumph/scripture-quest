@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
-import { useHearts } from "@/hooks/useHearts";
+import { useOilLamp } from "@/hooks/useOilLamp";
 import { ArrowLeft, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import confetti from "canvas-confetti";
@@ -33,7 +33,7 @@ export default function MemoryMatch() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { toast } = useToast();
-  const { hearts, loseHeart } = useHearts();
+  const { oil } = useOilLamp();
   const [verse, setVerse] = useState<Verse | null>(null);
   const [loading, setLoading] = useState(true);
   const [cards, setCards] = useState<Card[]>([]);
