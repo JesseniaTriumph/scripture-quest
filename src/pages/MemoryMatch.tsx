@@ -46,6 +46,7 @@ export default function MemoryMatch() {
   const [showInstructions, setShowInstructions] = useState(true);
   const [showPreview, setShowPreview] = useState(false);
   const [currentSegment, setCurrentSegment] = useState(0); // Track which segment pair to match next
+  const [shakingCard, setShakingCard] = useState<number | null>(null); // Track card being shaken
 
   useEffect(() => {
     if (!verseId || !user) {
@@ -125,6 +126,10 @@ export default function MemoryMatch() {
     
     // Only allow clicking cards from the current segment
     if (card.verseId !== `segment-${currentSegment}`) {
+      // Trigger shake animation for wrong card
+      setShakingCard(index);
+      setTimeout(() => setShakingCard(null), 500);
+      
       toast({
         title: "Match in Order",
         description: `Please match Part ${currentSegment + 1} first`,
@@ -355,6 +360,8 @@ export default function MemoryMatch() {
                     key={card.id}
                     onClick={() => handleCardClick(index)}
                     className={`relative aspect-square animate-scale-in ${
+                      shakingCard === index ? "animate-shake" : ""
+                    } ${
                       card.verseId === `segment-${currentSegment}` && !card.matched
                         ? "cursor-pointer"
                         : card.matched
@@ -363,7 +370,7 @@ export default function MemoryMatch() {
                     }`}
                     style={{ 
                       perspective: "1000px",
-                      animationDelay: `${index * 0.08}s`,
+                      animationDelay: shakingCard === index ? "0s" : `${index * 0.08}s`,
                       opacity: 0,
                       animationFillMode: "forwards"
                     }}
