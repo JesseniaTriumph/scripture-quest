@@ -342,14 +342,19 @@ export default function MemoryMatch() {
                   <div
                     key={card.id}
                     onClick={() => handleCardClick(index)}
-                    className={`relative aspect-square ${
+                    className={`relative aspect-square animate-scale-in ${
                       card.verseId === `segment-${currentSegment}` && !card.matched
                         ? "cursor-pointer"
                         : card.matched
                         ? "cursor-default"
                         : "cursor-not-allowed opacity-40"
                     }`}
-                    style={{ perspective: "1000px" }}
+                    style={{ 
+                      perspective: "1000px",
+                      animationDelay: `${index * 0.08}s`,
+                      opacity: 0,
+                      animationFillMode: "forwards"
+                    }}
                   >
                     <div
                       className={`relative w-full h-full transition-all duration-500 ${
