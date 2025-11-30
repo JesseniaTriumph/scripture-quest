@@ -339,21 +339,43 @@ export default function MemoryMatch() {
             ) : (
               <div className="grid grid-cols-4 gap-4">
                 {cards.map((card, index) => (
-                  <Card
+                  <div
                     key={card.id}
                     onClick={() => handleCardClick(index)}
-                    className={`aspect-square transition-all duration-300 ${
-                      card.matched 
-                        ? "bg-success/10 border-success cursor-default" 
-                        : card.flipped 
-                        ? "bg-primary/10 border-primary cursor-pointer" 
-                        : card.verseId === `segment-${currentSegment}`
-                        ? "hover:bg-muted cursor-pointer border-2 border-primary/40"
-                        : "opacity-40 cursor-not-allowed border border-muted"
+                    className={`relative aspect-square ${
+                      card.verseId === `segment-${currentSegment}` && !card.matched
+                        ? "cursor-pointer"
+                        : card.matched
+                        ? "cursor-default"
+                        : "cursor-not-allowed opacity-40"
                     }`}
+                    style={{ perspective: "1000px" }}
                   >
-                    <div className="h-full flex items-center justify-center p-4">
-                      {card.flipped || card.matched ? (
+                    <div
+                      className={`relative w-full h-full transition-all duration-500 ${
+                        card.flipped || card.matched ? "[transform:rotateY(180deg)]" : ""
+                      }`}
+                      style={{ transformStyle: "preserve-3d" }}
+                    >
+                      {/* Card Back (Hidden/Question Mark) */}
+                      <Card
+                        className={`absolute inset-0 flex items-center justify-center ${
+                          card.verseId === `segment-${currentSegment}` && !card.matched
+                            ? "hover:bg-muted border-2 border-primary/40"
+                            : "border border-muted"
+                        } [backface-visibility:hidden]`}
+                      >
+                        <div className="text-4xl">❓</div>
+                      </Card>
+
+                      {/* Card Front (Content) */}
+                      <Card
+                        className={`absolute inset-0 flex items-center justify-center p-4 ${
+                          card.matched 
+                            ? "bg-success/10 border-success animate-scale-in" 
+                            : "bg-primary/10 border-primary"
+                        } [backface-visibility:hidden] [transform:rotateY(180deg)]`}
+                      >
                         <div className="text-center">
                           <p className={`text-xs font-semibold mb-2 ${
                             card.type === "reference" ? "text-primary" : "text-foreground"
@@ -362,11 +384,9 @@ export default function MemoryMatch() {
                           </p>
                           <p className="text-sm font-medium">{card.content}</p>
                         </div>
-                      ) : (
-                        <div className="text-4xl">❓</div>
-                      )}
+                      </Card>
                     </div>
-                  </Card>
+                  </div>
                 ))}
               </div>
             )}
