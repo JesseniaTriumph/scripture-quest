@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useOilLamp } from "@/hooks/useOilLamp";
 import { useSounds } from "@/hooks/useSounds";
+import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, Eye, EyeOff, CheckCircle } from "lucide-react";
 import confetti from "canvas-confetti";
 import { CharacterGuide } from "@/components/CharacterGuide";
@@ -24,8 +25,8 @@ export default function RecallMode() {
   const verseId = searchParams.get("verseId");
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { oil, burnOil } = useOilLamp();
   const { toast } = useToast();
-  const { burnOil } = useOilLamp();
   const { playVictory } = useSounds();
   const [verse, setVerse] = useState<Verse | null>(null);
   const [loading, setLoading] = useState(true);
@@ -115,7 +116,7 @@ export default function RecallMode() {
         description: `Amazing! You earned ${verse.xp_reward * 2} XP and 10 coins!`,
       });
     } else {
-      await loseHeart();
+      await burnOil();
       toast({
         title: accuracy >= 80 ? "Almost there!" : "Keep practicing",
         description: `You got ${accuracy}% correct. Try again!`,
@@ -158,7 +159,7 @@ export default function RecallMode() {
             </div>
             <div className="text-right">
               <p className="text-sm text-white/70">Lamp Oil</p>
-              <p className="text-2xl font-bold">{hearts}/5</p>
+              <p className="text-2xl font-bold">{oil}/5</p>
             </div>
           </div>
         </div>
@@ -247,7 +248,7 @@ export default function RecallMode() {
           ) : (
             <Button
               onClick={handleCheck}
-              disabled={!userInput.trim() || hearts === 0}
+              disabled={!userInput.trim() || oil === 0}
               className="w-full gradient-primary text-white hover:opacity-90"
               size="lg"
             >

@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useOilLamp } from "@/hooks/useOilLamp";
 import { useSounds } from "@/hooks/useSounds";
+import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, RotateCcw, CheckCircle, Flame } from "lucide-react";
 import confetti from "canvas-confetti";
 import { CharacterGuide } from "@/components/CharacterGuide";
@@ -29,8 +30,8 @@ export default function VerseBuilder() {
   const verseId = searchParams.get("verseId");
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { toast } = useToast();
   const { oil, burnOil } = useOilLamp();
+  const { toast } = useToast();
   const { playVictory } = useSounds();
   const [verse, setVerse] = useState<Verse | null>(null);
   const [loading, setLoading] = useState(true);
@@ -157,7 +158,7 @@ export default function VerseBuilder() {
         });
       }
     } else {
-      await loseHeart();
+      await burnOil();
       toast({
         title: "Not quite right",
         description: "Check the word order and try again!",
@@ -201,8 +202,8 @@ export default function VerseBuilder() {
               <p className="text-white/90">Drag and drop words to build the verse</p>
             </div>
             <div className="text-right">
-              <p className="text-sm text-white/70">Hearts</p>
-              <p className="text-2xl font-bold">{hearts}/5</p>
+              <p className="text-sm text-white/70">Lamp Oil</p>
+              <p className="text-2xl font-bold">{oil}/5</p>
             </div>
           </div>
         </div>
@@ -294,7 +295,7 @@ export default function VerseBuilder() {
               </Button>
               <Button
                 onClick={handleCheck}
-                disabled={placedWords.includes(null) || hearts === 0}
+                disabled={placedWords.includes(null) || oil === 0}
                 className="flex-1 gradient-primary text-white hover:opacity-90"
                 size="lg"
               >
