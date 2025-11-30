@@ -1,11 +1,11 @@
 import { Flame, Infinity } from "lucide-react";
-import { useHearts } from "@/hooks/useHearts";
+import { useOilLamp } from "@/hooks/useOilLamp";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 
-export const HeartsDisplay = () => {
-  const { hearts, maxHearts, isPremium, isLoading, timeUntilNextHeart } = useHearts();
+export const OilLampDisplay = () => {
+  const { oil, maxOil, isPremium, isLoading, timeUntilRefill } = useOilLamp();
 
   if (isLoading) {
     return (
@@ -35,8 +35,8 @@ export const HeartsDisplay = () => {
     );
   }
 
-  const heartsPercentage = (hearts / maxHearts) * 100;
-  const heartColor = hearts === 0 ? "text-muted-foreground" : "text-primary";
+  const oilPercentage = (oil / maxOil) * 100;
+  const oilColor = oil === 0 ? "text-muted-foreground" : "text-primary";
 
   return (
     <Card className="p-4">
@@ -44,40 +44,40 @@ export const HeartsDisplay = () => {
         {/* Oil Lamps count */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            {Array.from({ length: maxHearts }).map((_, i) => (
+            {Array.from({ length: maxOil }).map((_, i) => (
               <Flame
                 key={i}
                 className={`h-5 w-5 ${
-                  i < hearts 
+                  i < oil 
                     ? "fill-primary text-primary animate-pulse-soft" 
                     : "text-muted-foreground/30"
                 }`}
               />
             ))}
           </div>
-          <span className={`text-lg font-bold ${heartColor}`}>
-            {hearts}/{maxHearts}
+          <span className={`text-lg font-bold ${oilColor}`}>
+            {oil}/{maxOil}
           </span>
         </div>
 
         {/* Progress bar */}
-        <Progress value={heartsPercentage} className="h-2" />
+        <Progress value={oilPercentage} className="h-2" />
 
         {/* Regeneration timer */}
-        {hearts < maxHearts && timeUntilNextHeart && (
+        {oil < maxOil && timeUntilRefill && (
           <div className="flex items-center justify-between text-xs text-muted-foreground">
             <span>Next lamp oil refills in:</span>
-            <span className="font-mono font-bold text-primary">{timeUntilNextHeart}</span>
+            <span className="font-mono font-bold text-primary">{timeUntilRefill}</span>
           </div>
         )}
 
-        {hearts === maxHearts && (
+        {oil === maxOil && (
           <p className="text-xs text-success text-center font-semibold">
             ✨ All lamp oil restored!
           </p>
         )}
 
-        {hearts === 0 && (
+        {oil === 0 && (
           <div className="text-center space-y-1">
             <p className="text-xs text-destructive font-semibold">
               🪔 Out of lamp oil!

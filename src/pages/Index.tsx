@@ -5,7 +5,7 @@ import { GamesHub } from "@/components/GamesHub";
 import { PathView } from "@/components/PathView";
 import { ProfileDashboard } from "@/components/ProfileDashboard";
 import { CallToAction } from "@/components/CallToAction";
-import { HeartsDisplay } from "@/components/HeartsDisplay";
+import { OilLampDisplay } from "@/components/OilLampDisplay";
 import { GracePassIndicator } from "@/components/GracePassIndicator";
 import { GracePassModal } from "@/components/GracePassModal";
 import { UserStats } from "@/components/UserStats";
@@ -88,9 +88,9 @@ const Index = () => {
         <>
           <div className="container max-w-7xl px-4 -mt-8 mb-8 space-y-4">
             <div className="flex justify-between items-start gap-4">
-              {/* Lamp Oil (Hearts) and Grace Pass indicators */}
+              {/* Lamp Oil and Grace Pass indicators */}
               <div className="flex gap-3">
-                <HeartsDisplay />
+                <OilLampDisplay />
                 <GracePassIndicator />
               </div>
               <Button

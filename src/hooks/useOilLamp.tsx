@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from './useAuth';
 
-const MAX_HEARTS = 5;
+const MAX_OIL = 5;
 const REGEN_TIME_MS = 15 * 60 * 1000; // 15 minutes in milliseconds
 
 interface Profile {
@@ -11,40 +11,40 @@ interface Profile {
   is_premium: boolean;
 }
 
-export const useHearts = () => {
+export const useOilLamp = () => {
   const { user } = useAuth();
-  const [hearts, setHearts] = useState<number>(MAX_HEARTS);
+  const [oil, setOil] = useState<number>(MAX_OIL);
   const [isPremium, setIsPremium] = useState(false);
-  const [timeUntilNextHeart, setTimeUntilNextHeart] = useState<number>(0);
+  const [timeUntilRefill, setTimeUntilRefill] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
 
-  const calculateRegeneratedHearts = (
-    currentHearts: number,
+  const calculateRegeneratedOil = (
+    currentOil: number,
     lastUpdated: string
-  ): { hearts: number; newTimestamp: string } => {
-    if (currentHearts >= MAX_HEARTS) {
-      return { hearts: currentHearts, newTimestamp: lastUpdated };
+  ): { oil: number; newTimestamp: string } => {
+    if (currentOil >= MAX_OIL) {
+      return { oil: currentOil, newTimestamp: lastUpdated };
     }
 
     const now = new Date();
     const lastUpdatedTime = new Date(lastUpdated);
     const timeDiff = now.getTime() - lastUpdatedTime.getTime();
-    const heartsToRegen = Math.floor(timeDiff / REGEN_TIME_MS);
+    const oilToRegen = Math.floor(timeDiff / REGEN_TIME_MS);
 
-    if (heartsToRegen === 0) {
-      return { hearts: currentHearts, newTimestamp: lastUpdated };
+    if (oilToRegen === 0) {
+      return { oil: currentOil, newTimestamp: lastUpdated };
     }
 
-    const newHearts = Math.min(MAX_HEARTS, currentHearts + heartsToRegen);
-    const timeForRegenHearts = heartsToRegen * REGEN_TIME_MS;
+    const newOil = Math.min(MAX_OIL, currentOil + oilToRegen);
+    const timeForRegenOil = oilToRegen * REGEN_TIME_MS;
     const newTimestamp = new Date(
-      lastUpdatedTime.getTime() + timeForRegenHearts
+      lastUpdatedTime.getTime() + timeForRegenOil
     ).toISOString();
 
-    return { hearts: newHearts, newTimestamp };
+    return { oil: newOil, newTimestamp };
   };
 
-  const fetchAndUpdateHearts = async () => {
+  const fetchAndUpdateOil = async () => {
     if (!user) {
       setIsLoading(false);
       return;
@@ -62,92 +62,92 @@ export const useHearts = () => {
 
       setIsPremium(profile.is_premium);
 
-      // Premium users have unlimited hearts
+      // Premium users have unlimited oil
       if (profile.is_premium) {
-        setHearts(MAX_HEARTS);
-        setTimeUntilNextHeart(0);
+        setOil(MAX_OIL);
+        setTimeUntilRefill(0);
         setIsLoading(false);
         return;
       }
 
-      // Calculate regenerated hearts
-      const { hearts: newHearts, newTimestamp } = calculateRegeneratedHearts(
+      // Calculate regenerated oil
+      const { oil: newOil, newTimestamp } = calculateRegeneratedOil(
         profile.hearts,
         profile.hearts_updated_at
       );
 
-      // Update in database if hearts changed
-      if (newHearts !== profile.hearts) {
+      // Update in database if oil changed
+      if (newOil !== profile.hearts) {
         await supabase
           .from('profiles')
           .update({
-            hearts: newHearts,
+            hearts: newOil,
             hearts_updated_at: newTimestamp,
           })
           .eq('user_id', user.id);
       }
 
-      setHearts(newHearts);
+      setOil(newOil);
       setIsLoading(false);
     } catch (error) {
-      console.error('Error fetching hearts:', error);
+      console.error('Error fetching oil:', error);
       setIsLoading(false);
     }
   };
 
-  const loseHeart = async () => {
-    if (!user || isPremium || hearts <= 0) return false;
+  const burnOil = async () => {
+    if (!user || isPremium || oil <= 0) return false;
 
-    const newHearts = hearts - 1;
+    const newOil = oil - 1;
     const now = new Date().toISOString();
 
     try {
       const { error } = await supabase
         .from('profiles')
         .update({
-          hearts: newHearts,
+          hearts: newOil,
           hearts_updated_at: now,
         })
         .eq('user_id', user.id);
 
       if (error) throw error;
 
-      setHearts(newHearts);
+      setOil(newOil);
       return true;
     } catch (error) {
-      console.error('Error losing heart:', error);
+      console.error('Error burning oil:', error);
       return false;
     }
   };
 
-  const addHearts = async (amount: number) => {
+  const refillOil = async (amount: number) => {
     if (!user) return false;
 
-    const newHearts = Math.min(MAX_HEARTS, hearts + amount);
+    const newOil = Math.min(MAX_OIL, oil + amount);
 
     try {
       const { error } = await supabase
         .from('profiles')
         .update({
-          hearts: newHearts,
+          hearts: newOil,
           hearts_updated_at: new Date().toISOString(),
         })
         .eq('user_id', user.id);
 
       if (error) throw error;
 
-      setHearts(newHearts);
+      setOil(newOil);
       return true;
     } catch (error) {
-      console.error('Error adding hearts:', error);
+      console.error('Error refilling oil:', error);
       return false;
     }
   };
 
-  // Calculate time until next heart regenerates
+  // Calculate time until next oil regenerates
   useEffect(() => {
-    if (!user || isPremium || hearts >= MAX_HEARTS) {
-      setTimeUntilNextHeart(0);
+    if (!user || isPremium || oil >= MAX_OIL) {
+      setTimeUntilRefill(0);
       return;
     }
 
@@ -165,42 +165,42 @@ export const useHearts = () => {
       const timeSinceUpdate = now - lastUpdated;
       const timeUntilNext = REGEN_TIME_MS - (timeSinceUpdate % REGEN_TIME_MS);
 
-      setTimeUntilNextHeart(Math.max(0, timeUntilNext));
+      setTimeUntilRefill(Math.max(0, timeUntilNext));
     };
 
     updateCountdown();
     const interval = setInterval(updateCountdown, 1000);
 
     return () => clearInterval(interval);
-  }, [user, isPremium, hearts]);
+  }, [user, isPremium, oil]);
 
-  // Check for hearts regeneration every minute
+  // Check for oil regeneration every minute
   useEffect(() => {
     if (!user || isPremium) return;
 
-    fetchAndUpdateHearts();
-    const interval = setInterval(fetchAndUpdateHearts, 60000);
+    fetchAndUpdateOil();
+    const interval = setInterval(fetchAndUpdateOil, 60000);
 
     return () => clearInterval(interval);
   }, [user, isPremium]);
 
   const formatTimeUntilNext = () => {
-    if (timeUntilNextHeart === 0) return null;
+    if (timeUntilRefill === 0) return null;
     
-    const minutes = Math.floor(timeUntilNextHeart / 60000);
-    const seconds = Math.floor((timeUntilNextHeart % 60000) / 1000);
+    const minutes = Math.floor(timeUntilRefill / 60000);
+    const seconds = Math.floor((timeUntilRefill % 60000) / 1000);
     
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
   return {
-    hearts,
-    maxHearts: MAX_HEARTS,
+    oil,
+    maxOil: MAX_OIL,
     isPremium,
     isLoading,
-    timeUntilNextHeart: formatTimeUntilNext(),
-    loseHeart,
-    addHearts,
-    refreshHearts: fetchAndUpdateHearts,
+    timeUntilRefill: formatTimeUntilNext(),
+    burnOil,
+    refillOil,
+    refreshOil: fetchAndUpdateOil,
   };
 };

@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { CHARACTERS } from "@/types/characters";
-import { Heart, Sparkles } from "lucide-react";
+import { Flame, Sparkles } from "lucide-react";
 
 interface GracePassModalProps {
   open: boolean;
@@ -153,7 +153,7 @@ export const GracePassModal = ({
 
             {/* Grace Passes Remaining Display */}
             <div className="flex items-center justify-center gap-2 p-3 bg-primary/10 rounded-lg">
-              <Heart className="w-5 h-5 text-primary" />
+              <Flame className="w-5 h-5 text-primary" />
               <span className="font-semibold">
                 {passesRemaining} Grace Pass{passesRemaining !== 1 ? 'es' : ''} Available
               </span>

@@ -5,10 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowLeft, Lightbulb } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
-import { useHearts } from "@/hooks/useHearts";
+import { useOilLamp } from "@/hooks/useOilLamp";
 import { toast } from "sonner";
 import confetti from "canvas-confetti";
-import { HeartsDisplay } from "@/components/HeartsDisplay";
+import { OilLampDisplay } from "@/components/OilLampDisplay";
 import { CharacterGuide } from "@/components/CharacterGuide";
 import { getCharacterForContext } from "@/types/characters";
 
@@ -24,7 +24,7 @@ export default function ScriptureReveal() {
   const [searchParams] = useSearchParams();
   const verseId = searchParams.get("verseId");
   const { user } = useAuth();
-  const { hearts, loseHeart, refreshHearts } = useHearts();
+  const { oil, burnOil, refreshOil } = useOilLamp();
 
   const [verse, setVerse] = useState<Verse | null>(null);
   const [loading, setLoading] = useState(true);
@@ -134,8 +134,8 @@ export default function ScriptureReveal() {
     if (!user) return;
 
     setFailed(true);
-    await loseHeart();
-    await refreshHearts();
+    await burnOil();
+    await refreshOil();
     toast.error("Out of revelation lights! Try again.");
   };
 
@@ -187,7 +187,7 @@ export default function ScriptureReveal() {
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back
           </Button>
-          <HeartsDisplay />
+          <OilLampDisplay />
         </div>
 
         <h1 className="text-2xl font-bold text-center">{verse.reference}</h1>

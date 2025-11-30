@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
-import { useHearts } from "@/hooks/useHearts";
-import { useToast } from "@/hooks/use-toast";
+import { useOilLamp } from "@/hooks/useOilLamp";
+import { useSounds } from "@/hooks/useSounds";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -33,8 +33,8 @@ export default function FillInTheBlank() {
   const verseId = searchParams.get("verseId");
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { hearts, loseHeart, refreshHearts } = useHearts();
-  const { toast } = useToast();
+  const { burnOil } = useOilLamp();
+  const { playVictory } = useSounds();
 
   const [verse, setVerse] = useState<Verse | null>(null);
   const [questions, setQuestions] = useState<BlankQuestion[]>([]);
