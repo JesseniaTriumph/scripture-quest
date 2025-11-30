@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useOilLamp } from "@/hooks/useOilLamp";
+import { useSounds } from "@/hooks/useSounds";
 import { ArrowLeft, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import confetti from "canvas-confetti";
@@ -34,6 +35,7 @@ export default function MemoryMatch() {
   const { user } = useAuth();
   const { toast } = useToast();
   const { oil } = useOilLamp();
+  const { playChime, playVictory } = useSounds();
   const [verse, setVerse] = useState<Verse | null>(null);
   const [loading, setLoading] = useState(true);
   const [cards, setCards] = useState<Card[]>([]);
@@ -149,6 +151,7 @@ export default function MemoryMatch() {
 
     if (card1.verseId === card2.verseId && card1.type !== card2.type) {
       // Match found! Advance to next segment
+      playChime(); // Play chime sound on successful match
       setTimeout(() => {
         const newCards = [...cards];
         newCards[index1].matched = true;
@@ -183,6 +186,7 @@ export default function MemoryMatch() {
 
   const completeGame = async () => {
     setIsComplete(true);
+    playVictory(); // Play victory sound on game completion
     confetti({
       particleCount: 150,
       spread: 80,
