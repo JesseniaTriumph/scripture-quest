@@ -1,12 +1,25 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Share2, Loader2 } from "lucide-react";
+import { BookOpen, Share2, Loader2, BookMarked } from "lucide-react";
 import { useKJVVerse } from "@/hooks/useKJV";
+import { Link } from "react-router-dom";
 
 export const DailyVerse = () => {
   // Default verse - can be made dynamic later with daily rotation
   const verseReference = "John 3:16";
   const { text, loading, error } = useKJVVerse(verseReference);
+
+  // Parse reference to extract book, chapter, and verse for the reader link
+  const parseReference = (ref: string) => {
+    const match = ref.match(/^(.+?)\s+(\d+):(\d+)/);
+    if (match) {
+      return { book: match[1], chapter: match[2], verse: match[3] };
+    }
+    return { book: 'John', chapter: '3', verse: '16' };
+  };
+
+  const { book, chapter, verse } = parseReference(verseReference);
+  const readerUrl = `/reader?book=${encodeURIComponent(book)}&chapter=${chapter}&verse=${verse}`;
 
   return (
     <section className="py-20 px-4 bg-secondary/30">
@@ -49,6 +62,12 @@ export const DailyVerse = () => {
           <div className="flex flex-col sm:flex-row gap-3 mt-8">
             <Button className="gradient-primary text-white hover:opacity-90 flex-1">
               Practice This Verse
+            </Button>
+            <Button variant="outline" className="border-2" asChild>
+              <Link to={readerUrl}>
+                <BookMarked className="mr-2 h-4 w-4" />
+                View Full Chapter
+              </Link>
             </Button>
             <Button variant="outline" className="border-2">
               <Share2 className="mr-2 h-4 w-4" />
