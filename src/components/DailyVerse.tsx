@@ -1,8 +1,13 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Share2 } from "lucide-react";
+import { BookOpen, Share2, Loader2 } from "lucide-react";
+import { useKJVVerse } from "@/hooks/useKJV";
 
 export const DailyVerse = () => {
+  // Default verse - can be made dynamic later with daily rotation
+  const verseReference = "John 3:16";
+  const { text, loading, error } = useKJVVerse(verseReference);
+
   return (
     <section className="py-20 px-4 bg-secondary/30">
       <div className="container max-w-4xl">
@@ -22,12 +27,22 @@ export const DailyVerse = () => {
               <BookOpen className="h-6 w-6 text-white" />
             </div>
             <div className="flex-1">
-              <p className="text-2xl md:text-3xl font-serif leading-relaxed text-foreground mb-4">
-                "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life."
-              </p>
-              <p className="text-lg font-semibold text-primary">
-                John 3:16 (KJV)
-              </p>
+              {loading ? (
+                <div className="flex items-center justify-center py-8">
+                  <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                </div>
+              ) : error ? (
+                <p className="text-destructive">{error}</p>
+              ) : (
+                <>
+                  <p className="text-2xl md:text-3xl font-serif leading-relaxed text-foreground mb-4">
+                    "{text}"
+                  </p>
+                  <p className="text-lg font-semibold text-primary">
+                    {verseReference} (KJV)
+                  </p>
+                </>
+              )}
             </div>
           </div>
           
